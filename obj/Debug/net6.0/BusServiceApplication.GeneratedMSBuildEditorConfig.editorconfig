@@ -1,0 +1,121 @@
+is_global = true
+build_property.TargetFramework = net6.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = BusServiceApplication
+build_property.RootNamespace = BusServiceApplication
+build_property.ProjectDir = C:\Users\ricard03\Desktop\All Documents\Study material\study Unisa\Diploma Project\Bus_Project\BusServiceApplication\
+build_property.RazorLangVersion = 6.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\ricard03\Desktop\All Documents\Study material\study Unisa\Diploma Project\Bus_Project\BusServiceApplication
+build_property._RazorSourceGeneratorDebug = 
+
+[C:/Users/ricard03/Desktop/All Documents/Study material/study Unisa/Diploma Project/Bus_Project/BusServiceApplication/App.razor]
+build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ricard03/Desktop/All Documents/Study material/study Unisa/Diploma Project/Bus_Project/BusServiceApplication/Pages/Administrator Components/AdministratorPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5pc3RyYXRvciBDb21wb25lbnRzXEFkbWluaXN0cmF0b3JQYWdlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ricard03/Desktop/All Documents/Study material/study Unisa/Diploma Project/Bus_Project/BusServiceApplication/Pages/Administrator Components/AdminLogin.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5pc3RyYXRvciBDb21wb25lbnRzXEFkbWluTG9naW4ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ricard03/Desktop/All Documents/Study material/study Unisa/Diploma Project/Bus_Project/BusServiceApplication/Pages/Administrator Components/DisplayStudentsOnBusList.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5pc3RyYXRvciBDb21wb25lbnRzXERpc3BsYXlTdHVkZW50c09uQnVzTGlzdC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ricard03/Desktop/All Documents/Study material/study Unisa/Diploma Project/Bus_Project/BusServiceApplication/Pages/Administrator Components/DisplayWaitingList.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5pc3RyYXRvciBDb21wb25lbnRzXERpc3BsYXlXYWl0aW5nTGlzdC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ricard03/Desktop/All Documents/Study material/study Unisa/Diploma Project/Bus_Project/BusServiceApplication/Pages/Administrator Components/MISReports/DailyMISStudentsOnBussesbyDay.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5pc3RyYXRvciBDb21wb25lbnRzXE1JU1JlcG9ydHNcRGFpbHlNSVNTdHVkZW50c09uQnVzc2VzYnlEYXkucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ricard03/Desktop/All Documents/Study material/study Unisa/Diploma Project/Bus_Project/BusServiceApplication/Pages/Administrator Components/MISReports/WeeklyMISStudentsOnBussesByWeek.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5pc3RyYXRvciBDb21wb25lbnRzXE1JU1JlcG9ydHNcV2Vla2x5TUlTU3R1ZGVudHNPbkJ1c3Nlc0J5V2Vlay5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ricard03/Desktop/All Documents/Study material/study Unisa/Diploma Project/Bus_Project/BusServiceApplication/Pages/BusRoutComponenet/BusRoutAfternoonComponenet.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQnVzUm91dENvbXBvbmVuZXRcQnVzUm91dEFmdGVybm9vbkNvbXBvbmVuZXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ricard03/Desktop/All Documents/Study material/study Unisa/Diploma Project/Bus_Project/BusServiceApplication/Pages/BusRoutComponenet/BusRoutCompinenets.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQnVzUm91dENvbXBvbmVuZXRcQnVzUm91dENvbXBpbmVuZXRzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ricard03/Desktop/All Documents/Study material/study Unisa/Diploma Project/Bus_Project/BusServiceApplication/Pages/CalanderComponenets/CalanderEndDate.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2FsYW5kZXJDb21wb25lbmV0c1xDYWxhbmRlckVuZERhdGUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ricard03/Desktop/All Documents/Study material/study Unisa/Diploma Project/Bus_Project/BusServiceApplication/Pages/CalanderComponenets/CalanderSelectADate.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2FsYW5kZXJDb21wb25lbmV0c1xDYWxhbmRlclNlbGVjdEFEYXRlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ricard03/Desktop/All Documents/Study material/study Unisa/Diploma Project/Bus_Project/BusServiceApplication/Pages/CalanderComponenets/CalanderStartDate.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2FsYW5kZXJDb21wb25lbmV0c1xDYWxhbmRlclN0YXJ0RGF0ZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ricard03/Desktop/All Documents/Study material/study Unisa/Diploma Project/Bus_Project/BusServiceApplication/Pages/Counter.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ291bnRlci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ricard03/Desktop/All Documents/Study material/study Unisa/Diploma Project/Bus_Project/BusServiceApplication/Pages/Index.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ricard03/Desktop/All Documents/Study material/study Unisa/Diploma Project/Bus_Project/BusServiceApplication/Pages/Login.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9naW4ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ricard03/Desktop/All Documents/Study material/study Unisa/Diploma Project/Bus_Project/BusServiceApplication/Pages/ParentPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGFyZW50UGFnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ricard03/Desktop/All Documents/Study material/study Unisa/Diploma Project/Bus_Project/BusServiceApplication/Pages/RegistrationPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVnaXN0cmF0aW9uUGFnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ricard03/Desktop/All Documents/Study material/study Unisa/Diploma Project/Bus_Project/BusServiceApplication/Pages/StudentComponents/AddStudent.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3R1ZGVudENvbXBvbmVudHNcQWRkU3R1ZGVudC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ricard03/Desktop/All Documents/Study material/study Unisa/Diploma Project/Bus_Project/BusServiceApplication/Pages/StudentComponents/DisplayListOfStudents.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3R1ZGVudENvbXBvbmVudHNcRGlzcGxheUxpc3RPZlN0dWRlbnRzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ricard03/Desktop/All Documents/Study material/study Unisa/Diploma Project/Bus_Project/BusServiceApplication/Shared/SurveyPrompt.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFN1cnZleVByb21wdC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ricard03/Desktop/All Documents/Study material/study Unisa/Diploma Project/Bus_Project/BusServiceApplication/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ricard03/Desktop/All Documents/Study material/study Unisa/Diploma Project/Bus_Project/BusServiceApplication/Shared/MainLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE1haW5MYXlvdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-f6lucb60sv
+
+[C:/Users/ricard03/Desktop/All Documents/Study material/study Unisa/Diploma Project/Bus_Project/BusServiceApplication/Shared/NavMenu.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE5hdk1lbnUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-xz7nkkapul
+
+[C:/Users/ricard03/Desktop/All Documents/Study material/study Unisa/Diploma Project/Bus_Project/BusServiceApplication/Pages/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ricard03/Desktop/All Documents/Study material/study Unisa/Diploma Project/Bus_Project/BusServiceApplication/Pages/_Host.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX0hvc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ricard03/Desktop/All Documents/Study material/study Unisa/Diploma Project/Bus_Project/BusServiceApplication/Pages/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX0xheW91dC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 

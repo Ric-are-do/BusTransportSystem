@@ -1,0 +1,128 @@
+﻿@using System.Globalization
+
+<div class="container col-md-11 bg-light rounded border mt-3">
+    <div class="row">
+        <div class="col-md-6">
+            <label for="year">Year:</label>
+            <input type="number" id="year" @bind="@selectedYear" min="1900" max="2100" class="form-control form-control-sm" @oninput="OnSelectedYearChanged" />
+        </div>
+        <div class="col-md-6">
+            <label for="month">Month:</label>
+            <select id="month" @bind="@selectedMonth" class="form-select form-select-sm" @oninput="OnSelectedMonthChanged">
+                @for (int month = 1; month <= 12; month++)
+                {
+                    <option value="@month">@DateTimeFormatInfo.CurrentInfo.GetMonthName(month)</option>
+                }
+            </select>
+        </div>
+    </div>
+
+    <table class="table table-sm table-borderless mt-2">
+        <thead>
+            <tr>
+                <th style="width: 14%; text-align: center;">Sun</th>
+                <th style="width: 14%; text-align: center;">Mon</th>
+                <th style="width: 14%; text-align: center;">Tue</th>
+                <th style="width: 14%; text-align: center;">Wed</th>
+                <th style="width: 14%; text-align: center;">Thu</th>
+                <th style="width: 14%; text-align: center;">Fri</th>
+                <th style="width: 14%; text-align: center;">Sat</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < calendarDays.Count; i += 7)
+            {
+                <tr>
+                    @foreach (var day in calendarDays.Skip(i).Take(7))
+                    {
+                        <td class="text-center align-middle p-1">
+                            @if (day != DateTime.MinValue)
+                            {
+                                <button class="btn btn-link btn-sm date-btn @(day.Date == selectedEndDate.Date ? "selected-date" : "")" @onclick="() => SetEndDate(day)">@day.Day</button>
+                            }
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="text-center mt-3">
+        <h5>End Date: @endDateSelected</h5>
+    </div>
+</div>
+
+<style>
+    .date-btn:hover {
+        background-color: #f0f0f0;
+    }
+
+    .selected-date {
+        background-color: #007bff;
+        color: #fff;
+    }
+</style>
+
+@code {
+    [Parameter]
+    public DateTime EndDate { get; set; }
+
+    [Parameter]
+    public EventCallback<DateTime> EndDateChanged { get; set; }
+    private int selectedYear = DateTime.Now.Year;
+    private int selectedMonth = DateTime.Now.Month;
+    private List<DateTime> calendarDays;
+    private DateTime selectedEndDate = DateTime.MinValue; // Default value for end date
+    private string endDateSelected = "Select date";
+
+    protected override void OnInitialized()
+    {
+        UpdateCalendar();
+    }
+
+    private void OnSelectedYearChanged(ChangeEventArgs e)
+    {
+        if (int.TryParse(e.Value?.ToString(), out int year))
+        {
+            selectedYear = year;
+            UpdateCalendar();
+        }
+    }
+
+    private void OnSelectedMonthChanged(ChangeEventArgs e)
+    {
+        if (int.TryParse(e.Value?.ToString(), out int month))
+        {
+            selectedMonth = month;
+            UpdateCalendar();
+        }
+    }
+
+    private void UpdateCalendar()
+    {
+        var firstDayOfMonth = new DateTime(selectedYear, selectedMonth, 1);
+        var daysInMonth = DateTime.DaysInMonth(selectedYear, selectedMonth);
+
+        calendarDays = new List<DateTime>();
+
+        // Add empty cells for the days before the first day of the month
+        int emptyDays = (int)firstDayOfMonth.DayOfWeek;
+        calendarDays.AddRange(Enumerable.Repeat(DateTime.MinValue, emptyDays));
+
+        // Add the days of the month
+        calendarDays.AddRange(Enumerable.Range(1, daysInMonth).Select(day => new DateTime(selectedYear, selectedMonth, day)));
+
+        // Add empty cells for the days after the last day of the month to fill the table
+        int remainingCells = 42 - calendarDays.Count;
+        calendarDays.AddRange(Enumerable.Repeat(DateTime.MinValue, remainingCells));
+
+        StateHasChanged();
+    }
+
+    private void SetEndDate(DateTime date)
+    {
+        selectedEndDate = date;
+        endDateSelected = selectedEndDate.ToString("dd-MM-yyyy");
+        EndDateChanged.InvokeAsync(selectedEndDate);
+    }
+}

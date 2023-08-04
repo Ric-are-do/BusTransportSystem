@@ -1,0 +1,43 @@
+﻿@page "/adminLogin"
+@using BusServiceApplication.Data.Models
+@using System.Diagnostics;
+@using BusServiceApplication.Services;
+@using BusServiceApplication.Pages;
+@inject LoginPageService loginPageService
+@inject NavigationManager navigationManager
+
+
+
+
+<EditForm Model="ExistingUser" OnValidSubmit="HandleLogin" class="col-md-3">
+    <h1>Admin Login</h1>
+    <lable class="form-label">Email Address</lable>
+    <InputText id="EmailAddress" @bind-Value="ExistingUser.emailAddress" class="form-control"></InputText>
+    <lable class="form-label">Password</lable>
+    <InputText id="Password" @bind-Value="ExistingUser.password" class="form-control"></InputText>
+    <button type="submit" class="form-control mt-2 btn-primary">Login</button>
+
+</EditForm>
+
+
+
+@code {
+    public AdministrationDetails ExistingUser = new AdministrationDetails();
+
+    public void HandleLogin(EditContext editContext)
+    {
+        // need to get the entry from the database
+        // need to complete validation on the front end
+
+        //code here gets confirms we have the record
+        var ExistingUserAdmin = (AdministrationDetails)editContext.Model;
+        loginPageService.GetAdminForLogIn(ExistingUserAdmin.emailAddress, ExistingUserAdmin.password);
+
+        //code here stores the retrieved object into a variable
+        var PersonObjectIamGetting = loginPageService.GetAdminObjectWithLoginDetails(ExistingUser.emailAddress, ExistingUser.password);
+
+
+        //this is how we will handle routing and pass the value to the URL and then we will store that value in a parameter within
+        navigationManager.NavigateTo($"/AdministarotPage/{PersonObjectIamGetting.Id}");
+    }
+}

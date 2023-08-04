@@ -1,0 +1,77 @@
+﻿@using BusServiceApplication.Shared;
+@using BusServiceApplication.HelperMethods;
+
+@inject StudentService studentServices;
+@inject NavigationManager navigationManager;
+
+
+<h3>AddStudent</h3>
+
+<EditForm Model="student" OnValidSubmit="HandleAddingStudent">
+    <label class="form-label"> Student FirstName </label>
+        <InputText id="studentFirstName" @bind-Value="@student.Name" class="form-control" ></InputText>
+    <label class="form-label"> Student Surname </label>
+    <InputText id="studentFirstName" @bind-Value="@student.Surname" class="form-control"></InputText>
+    <label class="form-label"> Student CellphoneNumber </label>
+    <InputText id="studentFirstName" @bind-Value="@student.CellphoneNumber" class="form-control"></InputText>
+    <label class="form-label"> Student Grade </label>
+
+    @*Grades databinding*@
+    <select @bind="student.Grade">
+        <option>0</option>
+        @foreach(var item in grades)
+        {
+            <option value="@item.Grade">@item.Grade</option>
+        }
+    </select>
+
+    <p1>Debug ParentID : @ParentID</p1>
+
+    <button type="submit" class="form-control  mt-2 btn-primary">Submit</button>
+</EditForm>
+
+@code {
+    StudentDetails student = new StudentDetails();
+
+    //get the parent ID 
+    [Parameter]
+    public int ParentID { get; set; }
+
+    public void HandleAddingStudent(EditContext editContext)
+    {
+        var newStudent = (StudentDetails)editContext.Model;
+        newStudent.CreatedDate = DateTime.Now;
+        newStudent.childUserNameId = newStudent.Name + newStudent.CellphoneNumber;
+        newStudent.ParentId = ParentID;
+        studentServices.AddStudent(newStudent);
+        Refresh();
+
+  
+    }
+
+    public void Refresh()
+    {
+        var refreshPage = new RefreshPage(navigationManager);
+        refreshPage.refreshApplication();
+    }
+
+
+    //Creating a class that will hold our drop down list values 
+    //Used this method so more grades can be added at later point if need be 
+    public class Grades
+    {
+        public string Grade { get; set; }
+    }
+
+    //Create list 
+    List<Grades> grades = new List<Grades>
+    {
+        new Grades() {Grade = "8" },
+        new Grades() {Grade = "9" },
+        new Grades() {Grade = "10" },
+        new Grades() {Grade = "11" },
+        new Grades() {Grade = "12" },
+    };
+
+
+}

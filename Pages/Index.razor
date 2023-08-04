@@ -1,0 +1,78 @@
+﻿@using BusServiceApplication.Pages
+@using BusServiceApplication.Pages.Administrator_Components;
+@page "/"
+
+<PageTitle>Login Page</PageTitle>
+
+@*below is the Default loging page . This will by default be set to register *@
+
+
+<div class="container d-flex justify-content-center align-items-center vh-100 ">
+
+    <!-- First container -->
+    <div class="container p-4 bg-whiterounded shadow-lg">
+        <div class="container col-12 d-flex  justify-content-center align-items-center">
+            <div class="row">
+                <div class="col-md-4 p-0">
+                    <img src="images/SchoolImageSmall.png" class="img-fluid ">
+                </div>
+                <div class="col-md-8 p-0  ">
+                    <h1 class="text-lg-center text-color display-1 text-capitalize " style="color: #003f6b"> Impumelelo High School <br>Bus Booking System</h1>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="container p-4 mt-4 bg-light rounded shadow-lg">
+            <div class="d-flex justify-content-center align-items-center">
+                @*Componenets and componenet selection stored here *@
+
+                @if (CurrentDisplay == DisplayType.Login)
+                {
+                    <Login />
+                }
+                else if (CurrentDisplay == DisplayType.Registration)
+                {
+                    <RegistrationPage />
+                }
+                else if (CurrentDisplay == DisplayType.AdministrativeLogin)
+                {
+                    <AdminLogin />
+                }
+            </div>
+        </div>
+        <div class="d-grid gap-4 d-md-flex justify-content-md-center mt-2">
+            <button type="button" class="btn btn-outline-secondary btn-lg" onclick="@clickOnRegistrationButton">Register</button>
+            <button type="button" class="btn btn-outline-secondary btn-lg" onclick="@clickOnLoginButton">Login</button>
+            <button type="button" class="btn btn-outline-secondary btn-lg" onclick="@clickOnAdministrativeLoginButton">Admin Login</button>
+
+        </div>
+    </div>
+</div>
+
+@code {
+    /// <summary>
+    /// below we ise the toggle method to display the loggin componnet
+    /// </summary>
+    ///
+    public enum DisplayType
+    {
+        None,
+        Login,
+        Registration,
+        AdministrativeLogin
+    };
+
+    public DisplayType CurrentDisplay = DisplayType.Registration;
+
+    public void clickOnLoginButton() => CurrentDisplay = DisplayType.Login;
+    public void clickOnRegistrationButton() => CurrentDisplay = DisplayType.Registration;
+    public void clickOnAdministrativeLoginButton() => CurrentDisplay = DisplayType.AdministrativeLogin;
+
+}
+
+
+}
+
+
+

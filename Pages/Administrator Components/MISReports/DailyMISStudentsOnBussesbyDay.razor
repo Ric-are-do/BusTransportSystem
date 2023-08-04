@@ -1,0 +1,287 @@
+﻿@inject AdministratorServices administratorServices
+@inject StudentService studentsServices;
+@inject BusRoutServices busRoutServices;
+@using BusServiceApplication.Pages.CalanderComponenets;
+@using System.Diagnostics;
+
+
+
+@if(hasSearchBeenDone == true)
+{
+    <h1> Morning Bus Student Details </h1>
+    <h3> Monrning Bus 1 - Rooihuiskraal/The Reeds  </h3>
+    <table class="table table-hover text-uppercase align-content-center">
+        <thead class="table-primary">
+            <!-- Table header row -->
+            <tr>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Cellphone Number</th>
+                <th>Grade</th>
+                <th>Area</th>
+                <th> Start Date </th>
+                <th> End Date </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in busOneMorningList)
+            {
+                <tr class="align-content-lg-center">
+                    <td>@childUserName(item.ChildUserNameId).Name</td>
+                    <td>@childUserName(item.ChildUserNameId).Surname</td>
+                    <td>@childUserName(item.ChildUserNameId).Grade</td>
+                    <td>@childUserName(item.ChildUserNameId).CellphoneNumber</td>
+                    <td>@item.Area</td>
+                    <td>@item.TakingBusStartDate</td>
+                    <td>@item.TakingBusEndDate</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h3> Morning Bus 2 - Wierdapark/Amberfield</h3>
+    <table class="table table-hover text-uppercase align-content-center">
+        <thead class="table-primary">
+            <!-- Table header row -->
+            <tr>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Cellphone Number</th>
+                <th>Grade</th>
+                <th>Area</th>
+                <th> Start Date </th>
+                <th> End Date </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in busTwoMorningList)
+            {
+                <tr class="align-content-lg-center">
+                    <td>@childUserName(item.ChildUserNameId).Name</td>
+                    <td>@childUserName(item.ChildUserNameId).Surname</td>
+                    <td>@childUserName(item.ChildUserNameId).Grade</td>
+                    <td>@childUserName(item.ChildUserNameId).CellphoneNumber</td>
+                    <td>@item.Area</td>
+                    <td>@item.TakingBusStartDate</td>
+                    <td>@item.TakingBusEndDate</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <h3>Morning bus 3 - Centurion</h3>
+    <table class="table table-hover text-uppercase align-content-center">
+        <thead class="table-primary">
+            <!-- Table header row -->
+            <tr>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Cellphone Number</th>
+                <th>Grade</th>
+                <th>Area</th>
+                <th> Start Date </th>
+                <th> End Date </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in busThreeMorningList)
+            {
+                <tr class="align-content-lg-center">
+                    <td>@childUserName(item.ChildUserNameId).Name</td>
+                    <td>@childUserName(item.ChildUserNameId).Surname</td>
+                    <td>@childUserName(item.ChildUserNameId).Grade</td>
+                    <td>@childUserName(item.ChildUserNameId).CellphoneNumber</td>
+                    <td>@item.Area</td>
+                    <td>@item.TakingBusStartDate</td>
+                    <td>@item.TakingBusEndDate</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h1>Afternoon Bus Student Details </h1>
+    <h3>Afternoon Bus 1 - Rooihuiskraal/The Reeds</h3>
+    <table class="table table-hover text-uppercase align-content-center">
+        <thead class="table-primary">
+            <!-- Table header row -->
+            <tr>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Cellphone Number</th>
+                <th>Grade</th>
+                <th>Area</th>
+                <th> Start Date </th>
+                <th> End Date </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in busOneAfternoonList)
+            {
+                <tr class="align-content-lg-center">
+                    <td>@childUserName(item.ChildUserNameId).Name</td>
+                    <td>@childUserName(item.ChildUserNameId).Surname</td>
+                    <td>@childUserName(item.ChildUserNameId).Grade</td>
+                    <td>@childUserName(item.ChildUserNameId).CellphoneNumber</td>
+                    <td>@item.Area</td>
+                    <td>@item.TakingBusStartDate</td>
+                    <td>@item.TakingBusEndDate</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h3>Afternoon Bus 2 - Wierdapark/Amberfield</h3>
+        <table class="table table-hover text-uppercase align-content-center">
+        <thead class="table-primary">
+            <!-- Table header row -->
+            <tr>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Cellphone Number</th>
+                <th>Grade</th>
+                <th>Area</th>
+                <th> Start Date </th>
+                <th> End Date </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in busTwoAfternoonList)
+            {
+                <tr class="align-content-lg-center">
+                    <td>@childUserName(item.ChildUserNameId).Name</td>
+                    <td>@childUserName(item.ChildUserNameId).Surname</td>
+                    <td>@childUserName(item.ChildUserNameId).Grade</td>
+                    <td>@childUserName(item.ChildUserNameId).CellphoneNumber</td>
+                    <td>@item.Area</td>
+                    <td>@item.TakingBusStartDate</td>
+                    <td>@item.TakingBusEndDate</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h3>Afternoon Bus 3 - Centurion</h3>
+    <table class="table table-hover text-uppercase align-content-center">
+        <thead class="table-primary">
+            <!-- Table header row -->
+            <tr>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Cellphone Number</th>
+                <th>Grade</th>
+                <th>Area</th>
+                <th> Start Date </th>
+                <th> End Date </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in busThreeAfternoonList)
+            {
+                <tr class="align-content-lg-center">
+                    <td>@childUserName(item.ChildUserNameId).Name</td>
+                    <td>@childUserName(item.ChildUserNameId).Surname</td>
+                    <td>@childUserName(item.ChildUserNameId).Grade</td>
+                    <td>@childUserName(item.ChildUserNameId).CellphoneNumber</td>
+                    <td>@item.Area</td>
+                    <td>@item.TakingBusStartDate</td>
+                    <td>@item.TakingBusEndDate</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+<CalanderSelectADate EndDate="@selectedEndDate" EndDateChanged="@OnEndDateChanged" />
+<button type="button" onclick="@GetStudentDetailsBasedOnDate">Search</button>
+
+@code {
+    public List<BusDetailsMorning> busDetailsFromMorning = new List<BusDetailsMorning>();
+    public List<BusDetailsAfternoon> busDetailsfromAfternoons = new List<BusDetailsAfternoon>();
+    public List<StudentDetails> listOfStudentDetails = new List<StudentDetails>();
+    bool hasSearchBeenDone = false;
+
+    //Temporary lists we will use to display the different busses rosters
+    public List<BusDetailsMorning> busOneMorningList = new List<BusDetailsMorning>();
+    public List<BusDetailsMorning> busTwoMorningList = new List<BusDetailsMorning>();
+    public List<BusDetailsMorning> busThreeMorningList = new List<BusDetailsMorning>();
+    public List<BusDetailsAfternoon> busOneAfternoonList = new List<BusDetailsAfternoon>();
+    public List<BusDetailsAfternoon> busTwoAfternoonList = new List<BusDetailsAfternoon>();
+    public List<BusDetailsAfternoon> busThreeAfternoonList = new List<BusDetailsAfternoon>();
+
+    private void GetStudentDetailsBasedOnDate()
+    {
+
+        busDetailsFromMorning = administratorServices.GetListOfStudentsOnMorningBusAndSelectDate(selectedEndDate);
+        busDetailsfromAfternoons = administratorServices.GetListOfStudentsOnAfternoonBusAndSelectDate(selectedEndDate);
+
+        //I want to clear these lists wach time I search otherwise it will just combine search results with the previous querry
+        busOneMorningList.Clear();
+        busTwoMorningList.Clear();
+        busThreeMorningList.Clear();
+        busOneAfternoonList.Clear();
+        busTwoAfternoonList.Clear();
+        busThreeAfternoonList.Clear();
+
+        hasSearchBeenDone = true;
+        SeperateobjectsIntoListsForEachBust();
+    }
+
+    private DateTime selectedEndDate;
+
+    private void OnEndDateChanged(DateTime endDate)
+    {
+        selectedEndDate = endDate;
+        // Do whatever you want with the selectedEndDate value.
+    }
+
+    public void SeperateobjectsIntoListsForEachBust()
+    {
+        foreach (var item in busDetailsFromMorning)
+        {
+            if (item.BusNumber == 1)
+            {
+                busOneMorningList.Add(item);
+            }
+            else if (item.BusNumber == 2)
+            {
+                busTwoMorningList.Add(item);
+            }
+            else if (item.BusNumber == 3)
+            {
+                busThreeMorningList.Add(item);
+            }
+            else
+            {
+                Debug.WriteLine("This student is not associated with a bus ");
+            }
+        }
+
+        foreach (var item in busDetailsfromAfternoons)
+        {
+            if (item.BusNumber == 1)
+            {
+                busOneAfternoonList.Add(item);
+            }
+            else if (item.BusNumber == 2) 
+            {
+                busTwoAfternoonList.Add(item);
+            }
+            else if (item.BusNumber == 3)
+            {
+                busThreeAfternoonList.Add(item);
+            }
+            else
+            {
+                Debug.WriteLine("This student is not associated with a bus ");
+            }
+        }
+    }
+
+    public StudentDetails childUserName(string userName)
+    {
+        var thisStudentsDetails = studentsServices.GetStudentObjectByChildUserNameID(userName);
+        return thisStudentsDetails;
+    }
+
+}
+}

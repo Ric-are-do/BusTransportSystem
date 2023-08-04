@@ -1,0 +1,292 @@
+﻿@using BusServiceApplication.Services;
+@using BusServiceApplication.Data.Models;
+@using BusServiceApplication.Pages.CalanderComponenets;
+@using BusServiceApplication.HelperMethods;
+@using Newtonsoft.Json;
+@inject BusRoutServices busRoutServices;
+@inject StudentService studentServices;
+@inject NavigationManager navigationManager; 
+
+<h3>BusRoutCompinenets</h3>
+<h1> Morning Trip </h1>
+<h1> Select an area in the morning </h1>
+<h1> Select an area you would like to view </h1>
+
+
+@* create the form here *@
+
+<EditForm Model="busDetails" OnValidSubmit="HandleAddingStudentToBus">
+    <h3> Select an area for pick up</h3>
+    <h3>Which Student are you setting the details </h3>
+    <select @bind="@selectedStudentForForm" class="form-select-lg  aria-label=Default"> 
+        <option selected> Select A student </option>
+        @foreach(var item in listOfStudents )
+        {
+            <option value="@item.childUserNameId">@item.Name , @item.Surname</option>
+        }
+    </select>
+
+    <br />
+
+    <select @bind="selectedBusOption" class="form-select-lg  aria-label=Default select example">
+        <option selected> Select an area </option>
+        <option value=1>Rooihuiskraal/The Reeds</option>
+        <option value=2>Wierdapark/Amberfield</option>
+        <option value=3>Centurion</option>
+    </select>
+
+    @if (selectedBusOption == 1)
+    {
+        // set the values of the busDetials object to the values in the object at selected 
+        busDetails.BusNumber = busOneTripDetails.BusNumber;
+        busDetails.BusLimit = busOneTripDetails.BusLimit;
+        busDetails.BusRouteAAddress = busOneTripDetails.BusRouteAAddress;
+        busDetails.BusRouteAPickupTime = busOneTripDetails.BusRouteAPickupTime;
+        busDetails.BusRouteBAddress = busOneTripDetails.BusRouteBAddress;
+        busDetails.BusRouteBPickupTime = busOneTripDetails.BusRouteBPickupTime;
+        busDetails.MorningTrip = busOneTripDetails.MorningTrip;
+        busDetails.Area = busOneTripDetails.Area;
+
+    }
+    else if (selectedBusOption == 2)
+    {
+        busDetails.BusNumber = busTwoTripDetails.BusNumber;
+        busDetails.BusLimit = busTwoTripDetails.BusLimit;
+        busDetails.BusRouteAAddress = busTwoTripDetails.BusRouteAAddress;
+        busDetails.BusRouteAPickupTime = busTwoTripDetails.BusRouteAPickupTime;
+        busDetails.BusRouteBAddress = busTwoTripDetails.BusRouteBAddress;
+        busDetails.BusRouteBPickupTime = busTwoTripDetails.BusRouteBPickupTime;
+        busDetails.MorningTrip = busTwoTripDetails.MorningTrip;
+        busDetails.Area = busTwoTripDetails.Area;
+    }
+    else if (selectedBusOption == 3)
+    {
+        busDetails.BusNumber = busThreeTripDetails.BusNumber;
+        busDetails.BusLimit = busThreeTripDetails.BusLimit;
+        busDetails.BusRouteAAddress = busThreeTripDetails.BusRouteAAddress;
+        busDetails.BusRouteAPickupTime = busThreeTripDetails.BusRouteAPickupTime;
+        busDetails.BusRouteBAddress = busThreeTripDetails.BusRouteBAddress;
+        busDetails.BusRouteBPickupTime = busThreeTripDetails.BusRouteBPickupTime;
+        busDetails.MorningTrip = busThreeTripDetails.MorningTrip;
+        busDetails.Area = busThreeTripDetails.Area;
+    }
+
+    <button type="submit" class="btn-primary"> Add Student to List </button>
+    
+
+    <p> Bus Limit : @busDetails.BusLimit</p>
+    <p> First Stop : @busDetails.BusRouteAAddress</p>
+    <p> Arrival Time : @busDetails.BusRouteAPickupTime</p>
+    <p> Second Stop : @busDetails.BusRouteBAddress</p>
+    <p> Arrival Time : @busDetails.BusRouteBPickupTime</p>
+
+
+    
+</EditForm>
+
+@*code displays if there is space on the bus or not, 
+    consider using this with a yes no option for the waiting list 
+*@
+
+<h1>@messageForBusCapacity</h1>
+
+
+
+
+
+@* Caladner biniding *@
+<div class="container col-10 border border-primary mt-3">
+    <div class="row">
+    <div class="col - 6 ">
+    <CalanderStartDate StartDate="selectedStartDate" StartDateChanged="HandleStartDateChanged" />
+        </div >
+        <div class="col - 6">
+            <!-- Add the CalendarEndDate component here -->
+            <CalanderEndDate EndDate="selectedEndDate" EndDateChanged="HandleEndDateChanged" />
+        </div>
+    </div>
+</div>
+
+
+<BusRoutAfternoonComponenet ParentID="ParentID" />
+
+
+
+
+
+@code {
+    [Parameter]
+    public int ParentID { get; set; }
+    public bool isSpaceOnBus { get; set; }
+    public string messageForBusCapacity = string.Empty;
+
+    // create list for students object 
+    public string selectedStudentForForm { get; set;  }
+    public List<StudentDetails> listOfStudents = new List<StudentDetails>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        // method is run asynchronusly meaning we can run it parallel to other methods
+        listOfStudents = studentServices.getAllStudentsUnderLoggedInParent(ParentID);
+    }
+    //need to display this list to the parent and let them select which student they are referencing. Done 
+
+
+    //create object that we will be passing to the DB 
+    BusDetailsMorning busDetails = new BusDetailsMorning();
+    // when setting up the different bus types , we need an if stateent to select the items value
+    public int selectedBusOption { get; set; }
+
+
+    public void HandleAddingStudentToBus(EditContext editContext)
+    {
+        var newStudentToAddToBus = (BusDetailsMorning)editContext.Model;
+        newStudentToAddToBus.DateEntryCreated = DateTime.Today;
+        //run the metjod that retuns the time only and store it in the correct property 
+        var entryTime = getCurrentTime();
+        newStudentToAddToBus.TimeEntryCreated = entryTime;
+        // need to get student number 
+        newStudentToAddToBus.ChildUserNameId = selectedStudentForForm;
+        newStudentToAddToBus.TakingBusStartDate = selectedStartDate;
+        newStudentToAddToBus.TakingBusEndDate = selectedEndDate;
+        isSpaceOnBus = busRoutServices.checkSpaceOnTheBusMorning(newStudentToAddToBus);
+        informUserIfThereIsSpaceAvailable(isSpaceOnBus);
+        determineIfStudentShouldBeAddedToWaitingList(newStudentToAddToBus, isSpaceOnBus);
+        Refresh();
+
+
+    }
+
+    //checking space on Bus 
+    public  async Task informUserIfThereIsSpaceAvailable(bool value)
+    {
+        if(value == true)
+        {
+            messageForBusCapacity = "There is currently space on the bus, the Student has been added to the bus schedule";
+        }
+        else
+        {
+            messageForBusCapacity = "There is currently No space on the Bus, Would you like to add your Student to the waiting List";
+        }
+    }
+
+
+    public string getCurrentTime()
+    {
+        DateTime dateTime = DateTime.Now;
+        string timeOnly = dateTime.ToString("HH:mm:ss");
+        return timeOnly;
+    }
+
+    public void determineIfStudentShouldBeAddedToWaitingList(BusDetailsMorning studentWeAreAttemptingToAdd, bool isThereSpaceCheck)
+    {
+        if(isThereSpaceCheck == true)
+        {
+            //if there is space on the bus, this student will be added to the bus table 
+            busRoutServices.addStudentToMorningBus(studentWeAreAttemptingToAdd);
+        }
+        else
+        {
+            // Here we take the student details componenet that we wanted to add to the list 
+            // write the variables to the WaitingListDetialsClass 
+            // Add this WaitingListDetails object to the waiting List table 
+            WaitingListDetails studentToAdd = new WaitingListDetails();
+            studentToAdd.id = studentWeAreAttemptingToAdd.MorningId;
+            studentToAdd.ChildUserNameId = studentWeAreAttemptingToAdd.ChildUserNameId;
+            studentToAdd.BusNumber = studentWeAreAttemptingToAdd.BusNumber;
+            studentToAdd.BusLimit = studentWeAreAttemptingToAdd.BusLimit;
+            studentToAdd.MorningTrip = studentWeAreAttemptingToAdd.MorningTrip;
+            studentToAdd.Area = studentWeAreAttemptingToAdd.Area;
+            studentToAdd.BusRouteAAddress = studentWeAreAttemptingToAdd.BusRouteAAddress;
+            studentToAdd.BusRouteAPickupTime = studentWeAreAttemptingToAdd.BusRouteAPickupTime;
+            studentToAdd.BusRouteBAddress = studentWeAreAttemptingToAdd.BusRouteBAddress;
+            studentToAdd.BusRouteBPickupTime = studentWeAreAttemptingToAdd.BusRouteBPickupTime;
+            studentToAdd.DateEntryCreated = studentWeAreAttemptingToAdd.DateEntryCreated;
+            studentToAdd.TimeEntryCreated = studentWeAreAttemptingToAdd.TimeEntryCreated;
+            studentToAdd.TakingBusStartDate = studentWeAreAttemptingToAdd.TakingBusStartDate;
+            studentToAdd.TakingBusEndDate = studentWeAreAttemptingToAdd.TakingBusEndDate;
+
+            busRoutServices.addStudentToWaitingList(studentToAdd);
+        }
+    }
+
+    public void Refresh()
+    {
+        var refreshPage = new RefreshPage(navigationManager);
+        refreshPage.refreshApplication();
+    }
+
+
+
+    //create a class from a List of fixed bus details
+    public BusDetailsMorning busOneTripDetails = new BusDetailsMorning()
+        {
+            BusNumber = 1,
+            BusLimit = 1,
+            BusRouteAAddress = "Corner of Panorama and Marabou Road",
+            BusRouteAPickupTime = "6:22",
+            BusRouteBAddress = "Corner of Kolgansstraat and Skimmerstraat",
+            BusRouteBPickupTime = "6:30",
+            MorningTrip = true,
+            Area = "Rooihuiskraal/The Reeds"
+            
+        };
+
+    public BusDetailsMorning busTwoTripDetails = new BusDetailsMorning()
+        {
+            BusNumber = 2,
+            BusLimit = 1,
+            BusRouteAAddress = "Corner of Reddersburg Street and Mafeking Drive",
+            BusRouteAPickupTime = "6:25",
+            BusRouteBAddress = "Corner of Theuns van Niekerkstraat and Roosmarynstraat",
+            BusRouteBPickupTime = "6:35",
+            MorningTrip = true,
+            Area = "Wierdapark/Amberfield"
+        };
+
+    public BusDetailsMorning busThreeTripDetails = new BusDetailsMorning()
+        {
+            BusNumber = 3,
+            BusLimit = 1,
+            BusRouteAAddress = "Corner of Jasper Drive and Tieroog Street",
+            BusRouteAPickupTime = "6:20",
+            BusRouteBAddress = "Corner of Louise Street and Von Willich Drive",
+            BusRouteBPickupTime = "6:40",
+            MorningTrip = true,
+            Area = "Centurion"
+        };
+
+
+
+    //Code to handle calander function
+
+    private DateTime selectedStartDate;
+    private DateTime selectedEndDate;
+
+    private async Task HandleStartDateChanged(DateTime startDate)
+    {
+        selectedStartDate = startDate;
+        // Additional logic, if needed
+    }
+
+    private async Task HandleEndDateChanged(DateTime endDate)
+    {
+        selectedEndDate = endDate;
+        // Additional logic, if needed
+    }
+
+    [Parameter]
+    public DateTime StartDate { get; set; }
+
+    [Parameter]
+    public EventCallback<DateTime> StartDateChanged { get; set; }
+
+    private int selectedYear = DateTime.Now.Year;
+    private int selectedMonth = DateTime.Now.Month;
+    private List<int> calendarDays;
+    private int startDate = -1;
+    private string startDateSelected = "Select date";
+
+
+}
+

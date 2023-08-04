@@ -1,0 +1,43 @@
+﻿@page "/login"
+@using BusServiceApplication.Data.Models
+@using System.Diagnostics;
+@using BusServiceApplication.Services;
+@using BusServiceApplication.Pages;
+@inject LoginPageService loginPageService
+@inject NavigationManager navigationManager
+
+
+
+
+<EditForm Model="ExistingUser" OnValidSubmit="HandleLogin" class="col-md-3">
+    <h1>Login</h1>
+    <lable class="form-label">Email Address</lable>
+    <InputText id="EmailAddress" @bind-Value="ExistingUser.emailAddress" class="form-control"></InputText>
+    <lable class="form-label">Password</lable>
+    <InputText id="Password" @bind-Value="ExistingUser.password" class="form-control"></InputText>
+    <button type="submit" class="form-control mt-2 btn-primary">Login</button>
+
+</EditForm>
+
+
+@code {
+    public ParentDetails ExistingUser = new ParentDetails();
+
+
+    public void HandleLogin(EditContext editContext)
+    {
+        // need to get the entry from the database
+        // need to complete validation on the front end
+
+        //code here gets confirms we have the record 
+        var ExistingUser = (ParentDetails)editContext.Model;
+        loginPageService.GetUserNameForLogIn(ExistingUser.emailAddress, ExistingUser.password);
+
+        //code here stores the retrieved object into a variable
+        var PersonObjectIamGetting = loginPageService.GetParentObject(ExistingUser.emailAddress, ExistingUser.password);
+
+
+        //this is how we will handle routing and pass the value to the URL and then we will store that value in a parameter within
+        navigationManager.NavigateTo($"/ParentPage/{PersonObjectIamGetting.username}");
+    }
+}

@@ -1,0 +1,47 @@
+﻿@page "/Registration"
+@using BusServiceApplication.Data.Models
+@using System.Diagnostics;
+@using BusServiceApplication.Services;
+@using BusServiceApplication.Pages;
+@inject LoginPageService loginPageService
+@inject NavigationManager navigationManager
+
+<PageTitle>Login</PageTitle>
+
+
+@*The Code Below should give us the registration of the form *@
+
+<EditForm Model="@User" OnValidSubmit="HandleRegistration" class="col-md-3">
+    <h1>Register</h1>
+    <label class="form-label"> First Name </label>
+        <InputText id="firstName" @bind-Value="User.firstName" class="form-control"> Enter your First Name </InputText>
+        <label class="form-label"> Last Name </label>
+        <InputText id="lastName" @bind-Value="User.lastName" class="form-control"></InputText>
+        <label class="form-label"> Emial Address</label>
+        <InputText id="emailAddress" @bind-Value="User.emailAddress" class="form-control"></InputText>
+        <label class="form-label"> Phone Number </label>
+        <InputText id="phoneNumber" @bind-Value=User.phoneNumber class="form-control"></InputText>
+        <label class="form-label"> Password </label>
+        <InputText id="password" @bind-Value="User.password" class="form-control"> </InputText>
+    <button type="submit" class="form-control  mt-2 btn-primary"> Register </button>
+</EditForm>
+
+@code {
+    ParentDetails User = new ParentDetails();
+
+    public void HandleRegistration(EditContext editContext)
+    {
+        var newUser = (ParentDetails)editContext.Model;
+        newUser.username = newUser.firstName + newUser.phoneNumber;
+        newUser.CreateedDate = DateTime.Now;
+        loginPageService.CheckThatCredenetailsAreUnique(newUser.username, newUser.emailAddress);
+        loginPageService.RegisterANewUser(newUser);
+        Debug.WriteLine($"Submit {User.emailAddress}, {User.password} ");
+        var GetTheNewPersonObject = loginPageService.GetParentObject(newUser.emailAddress, newUser.password);
+        navigationManager.NavigateTo($"/ParentPage/{GetTheNewPersonObject.username}");
+
+
+
+    }
+
+}

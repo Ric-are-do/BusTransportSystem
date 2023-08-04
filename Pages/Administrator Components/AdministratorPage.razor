@@ -1,0 +1,43 @@
+﻿@using BusServiceApplication.Services;
+@using BusServiceApplication.Pages.Administrator_Components;
+@using BusServiceApplication.Pages.Administrator_Components.MISReports;
+@inject AdministratorServices administratorLoginServices;
+@page "/AdministarotPage/{Id}"
+
+<PageTitle>Administrator Landing Page </PageTitle>
+<h3>AdministratorPage</h3>
+
+<h1> @thisAdministrator.initials : @thisAdministrator.surname</h1>
+
+@*Lets show all the different lists that the administrator should be able to see *@
+
+<h1> Show the entire waiting List</h1>
+<DisplayWaitingList  />
+<DisplayStudentsOnBusList />
+
+<br />
+
+<h1>Daily MIS reports </h1>
+<DailyMISStudentsOnBussesbyDay />
+
+<br>
+
+<h1>Weekly Mis report</h1>
+<WeeklyMISStudentsOnBussesByWeek />
+
+
+
+
+@code {
+    [Parameter]
+    public string Id { get; set; }
+    // I need to write a method that gets he administrator by the ID and then adds them to the administraor object
+    public AdministrationDetails thisAdministrator =  new AdministrationDetails();
+
+    protected override async Task OnInitializedAsync()
+    {
+       thisAdministrator = administratorLoginServices.GetAdministratorDetailsFromId(Id);
+    }
+
+ 
+}
