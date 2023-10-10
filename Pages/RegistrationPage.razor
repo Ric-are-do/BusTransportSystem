@@ -12,17 +12,25 @@
 @*The Code Below should give us the registration of the form *@
 
 <EditForm Model="@User" OnValidSubmit="HandleRegistration" class="col-md-3">
+
+    <DataAnnotationsValidator /> @*Allows me to use validators on the form  *@
+
     <h1>Register</h1>
     <label class="form-label"> First Name </label>
-        <InputText id="firstName" @bind-Value="User.firstName" class="form-control"> Enter your First Name </InputText>
-        <label class="form-label"> Last Name </label>
-        <InputText id="lastName" @bind-Value="User.lastName" class="form-control"></InputText>
-        <label class="form-label"> Emial Address</label>
-        <InputText id="emailAddress" @bind-Value="User.emailAddress" class="form-control"></InputText>
-        <label class="form-label"> Phone Number </label>
-        <InputText id="phoneNumber" @bind-Value=User.phoneNumber class="form-control"></InputText>
-        <label class="form-label"> Password </label>
-        <InputText id="password" @bind-Value="User.password" class="form-control"> </InputText>
+    <InputText id="firstName" @bind-Value="User.firstName" class="form-control"> Enter your First Name </InputText>
+    <ValidationMessage For=" ()=>  User.firstName" />
+    <label class="form-label"> Last Name </label>
+    <InputText id="lastName" @bind-Value="User.lastName" class="form-control"></InputText>
+    <ValidationMessage For=" ()=>  User.lastName" />
+    <label class="form-label"> Emial Address</label>
+    <InputText id="emailAddress" @bind-Value="User.emailAddress" class="form-control"></InputText>
+    <ValidationMessage For=" ()=>  User.emailAddress" />
+    <label class="form-label"> Phone Number </label>
+    <InputText id="phoneNumber" @bind-Value=User.phoneNumber class="form-control"></InputText>
+    <ValidationMessage For=" ()=>  User.phoneNumber" />
+    <label class="form-label"> Password </label>
+    <InputText id="password" @bind-Value="User.password" class="form-control"> </InputText>
+    <ValidationMessage For=" ()=>  User.password" />
     <button type="submit" class="form-control  mt-2 btn-primary"> Register </button>
 </EditForm>
 

@@ -1,0 +1,160 @@
+﻿@using BusServiceApplication.Pages.Parent_Componenets;
+@using BusServiceApplication.Shared;
+@inject AdministratorServices administratorServices
+@inject StudentService studentsServices;
+@inject BusRoutServices busRoutServices;
+@inject LoginPageService loginPageService;
+
+
+
+<h2> Display students on bus </h2>
+<h1> @ParentIDForStudentsUnderParent</h1>
+
+
+<div class="container mt-4">
+    <div class="border">
+        <table class="table table-striped table-hover table-sm ">
+            <thead class="table-primary">
+                <tr>
+                    <th>childID</th>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th>Greade</th>
+                    <th>CellNumber</th>
+                    <th>Area</th>
+                    <th>Bus Number</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Table body rows for Morning -->
+                @foreach (var MorningItem in studnetsOnMorningBus)
+                {
+                    <tr>
+                        <td>@MorningItem.ChildUserNameId</td>
+                        <td>@childUserName(MorningItem.ChildUserNameId).Name</td>
+                        <td>@childUserName(MorningItem.ChildUserNameId).Surname</td>
+                        <td>@childUserName(MorningItem.ChildUserNameId).Grade</td>
+                        <td>@childUserName(MorningItem.ChildUserNameId).CellphoneNumber</td>
+                        <td>@MorningItem.Area</td>
+                        <td>@MorningItem.BusNumber</td>
+                        <td>@MorningItem.TakingBusStartDate</td>
+                        <td>@MorningItem.TakingBusEndDate</td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <h1> Afternoon list </h1>
+    <div class="border mt-4">
+        <table class="table  table-striped table-hover">
+            <thead class="table-primary">
+                <tr>
+                    <th>childID</th>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th>Grades</th>
+                    <th>CellNumber</th>
+                    <th>Area</th>
+                    <th>Bus Number</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Table body rows for Afternoon -->
+                @foreach (var AfternoonItem in studentsOnAfternoonBus)
+                {
+                    <tr>
+                        <td>@AfternoonItem.ChildUserNameId</td>
+                        <td>@childUserName(AfternoonItem.ChildUserNameId).Name</td>
+                        <td>@childUserName(AfternoonItem.ChildUserNameId).Surname</td>
+                        <td>@childUserName(AfternoonItem.ChildUserNameId).Grade</td>
+                        <td>@childUserName(AfternoonItem.ChildUserNameId).CellphoneNumber</td>
+                        <td>@AfternoonItem.Area</td>
+                        <td>@AfternoonItem.BusNumber</td>
+                        <td>@AfternoonItem.TakingBusStartDate</td>
+                        <td>@AfternoonItem.TakingBusEndDate</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    //fixed 
+    public int ParentIDForStudentsUnderParent { get; set; }
+    // public ParentDetails ThisParentDetails  { get; set; }
+
+    public List<BusDetailsMorning> studnetsOnMorningBus = new List<BusDetailsMorning>();
+    public List<BusDetailsAfternoon> studentsOnAfternoonBus = new List<BusDetailsAfternoon>();
+    public List<StudentDetails> studnetDetails = new List<StudentDetails>();
+    public StudentDetails thisStudent = new StudentDetails();
+    public List<StudentDetails> studentUnderThisParent = new List<StudentDetails>(); // can be potentially removed as there are no references 
+
+    //Temp field used for comparing the details between parent and student 
+    public List<StudentDetails> temporaryMorningListOfStudentsUnderParent = new List<StudentDetails>();
+    public List<StudentDetails> temporaryAfternoonListOfStudentsUnderParent = new List<StudentDetails>();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        studnetsOnMorningBus = busRoutServices.GetListOfStudentsOnMorningBus();
+        studentsOnAfternoonBus = busRoutServices.GetListOfStudentsOnAfternoonBus();
+      //  AddStudentsToParentWhereIdMathces(); // Get parent ID and use that to find children that are under the parent 
+    }
+
+    public StudentDetails childUserName(string userName)
+    {
+        var thisStudentsDetails = studentsServices.GetStudentObjectByChildUserNameID(userName);
+        return thisStudentsDetails;
+
+    }
+
+
+    //Need to filter the returned list to only show children where the parent ID is the same as the parent
+    // first loop through the list of students wher the parent ID is the same as thisParentID, once we loop then we add them to the list
+    //next we loop through this list and compate to the different parent / student lists
+
+    public void AddStudentsToParentWhereIdMathces()
+    {
+        //there is a method in child services to get all the child names based on the parent id 
+        // store that in a temp list 
+        // have the temp list loop through the morning and afternoon lists and comparte the child names 
+        // uutput those names to somehwre where we can use them to compare ahgaint the different busses 
+
+        var tempMorningList = studentsServices.getAllStudentsUnderLoggedInParent(ParentIDForStudentsUnderParent);
+
+        foreach(var item in studnetsOnMorningBus)
+        {
+            foreach (var TempListItem in tempMorningList)
+            {
+                if(item.ChildUserNameId == TempListItem.childUserNameId)
+                {
+                    temporaryMorningListOfStudentsUnderParent.Add(TempListItem);
+                }
+            }
+        }
+
+        var tempAfternoonList = studentsServices.getAllStudentsUnderLoggedInParent(ParentIDForStudentsUnderParent);
+        foreach (var item in studentsOnAfternoonBus)
+        {
+            foreach (var TempListItem in tempAfternoonList)
+            {
+                if (item.ChildUserNameId == TempListItem.childUserNameId)
+                {
+                    temporaryMorningListOfStudentsUnderParent.Add(TempListItem);
+                }
+            }
+        }
+
+    }
+
+
+
+}

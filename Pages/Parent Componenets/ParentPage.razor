@@ -8,30 +8,17 @@
     Below are the details we have for you
 </p>
 
-<ul>
-    <li>DB ID : @thisUserDetails.Id</li>
-    <li>Name : @thisUserDetails.firstName </li>
-    <li>Surname : @thisUserDetails.lastName</li>
-    <li>Contact Number : @thisUserDetails.phoneNumber</li>
-    <li>Email address : @thisUserDetails.emailAddress</li>
-</ul>
-
-@*below we set the vaue for the add student compinenet to match the parent ID *@
-<AddStudent ParentID="@thisUserDetails.Id" />
-<DisplayListOfStudents ParentID="thisUserDetails.Id" />
-<BusRoutCompinenets ParentID="thisUserDetails.Id" />
-
 <div class="container">
     <div class="row">
         <div class="col-lg-12 border border-primary">
-            <h1>Large first container </h1>
-
+            <h1>Welcome @thisUserDetails.firstName</h1>
+            <p> Below is a summary page regarding your profile. </p>
+           
             <div class="container ">
                 <div class="row">
                     <div class="col-lg-4 align-content-center border border-primary">
                         <div class=" align-content-center">
-                            Container 1
-                            <h1>Welcome @thisUserDetails.firstName</h1>
+                            <h2> @thisUserDetails.firstName @thisUserDetails.lastName Details</h2>
                             <p>Below are the details we have for you</p>
                             <ul class="list-group">
                                 <li class="list-group-item">DB ID : @thisUserDetails.Id</li>
@@ -45,10 +32,8 @@
                         </div>
                     </div>
                     <div class="col-lg-8  border border-primary">
-                        <div class="p-3">
-                            Container 2
-
-                            <DisplayListOfStudents ParentID="thisUserDetails.Id" />
+                        <div>
+                            <DisplayListOfStudents ParentID="thisUserDetails.Id" /> 
                         </div>
                     </div>
                 </div>
@@ -61,6 +46,10 @@
                             Container 3
                             <BusRoutCompinenets ParentID="thisUserDetails.Id" />
                             <AddStudent ParentID="@thisUserDetails.Id" />
+
+
+                            <h1> New Componenet </h1>
+                            <DisplayStudentOnBus ParentIDForStudentsUnderParent="@thisUserDetails.Id" />
                         </div>
                     </div>
                 </div>

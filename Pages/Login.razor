@@ -10,13 +10,22 @@
 
 
 <EditForm Model="ExistingUser" OnValidSubmit="HandleLogin" class="col-md-3">
+
+    @*Below attempt the data Adnnotation validaton so that we can check for validation *@
+    <DataAnnotationsValidator />  @*Allows me to use validators on the form  *@
+
+
+
     <h1>Login</h1>
     <lable class="form-label">Email Address</lable>
     <InputText id="EmailAddress" @bind-Value="ExistingUser.emailAddress" class="form-control"></InputText>
+    <ValidationMessage For="( ()=> ExistingUser.emailAddress ) "/>@*Validation message on blank or Invalid*@
     <lable class="form-label">Password</lable>
     <InputText id="Password" @bind-Value="ExistingUser.password" class="form-control"></InputText>
-    <button type="submit" class="form-control mt-2 btn-primary">Login</button>
+    <ValidationMessage For=" ( ()=> ExistingUser.password)" /> @*Validation message on blank or Invalid*@
 
+
+    <button type="submit" class="form-control mt-2 btn-primary">Login</button>
 </EditForm>
 
 

@@ -3559,11 +3559,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ricard03\\Desktop\\All Documents\\Study material\\study Unisa\\Diploma Project\\Bus_Project\\BusServiceApplication\\BusServiceApplication.csproj",
+      "projectUniqueName": "C:\\Users\\ricard03\\Desktop\\All Documents\\Study material\\study Unisa\\Diploma Project\\Bus_Project\\BusServiceApplicationRepo\\BusTransportSystem\\BusServiceApplication.csproj",
       "projectName": "BusServiceApplication",
-      "projectPath": "C:\\Users\\ricard03\\Desktop\\All Documents\\Study material\\study Unisa\\Diploma Project\\Bus_Project\\BusServiceApplication\\BusServiceApplication.csproj",
+      "projectPath": "C:\\Users\\ricard03\\Desktop\\All Documents\\Study material\\study Unisa\\Diploma Project\\Bus_Project\\BusServiceApplicationRepo\\BusTransportSystem\\BusServiceApplication.csproj",
       "packagesPath": "C:\\Users\\ricard03\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ricard03\\Desktop\\All Documents\\Study material\\study Unisa\\Diploma Project\\Bus_Project\\BusServiceApplication\\obj\\",
+      "outputPath": "C:\\Users\\ricard03\\Desktop\\All Documents\\Study material\\study Unisa\\Diploma Project\\Bus_Project\\BusServiceApplicationRepo\\BusTransportSystem\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\ricard03\\AppData\\Roaming\\NuGet\\NuGet.Config",
