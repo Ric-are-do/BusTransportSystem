@@ -170,10 +170,19 @@
 
     public void determineIfStudentShouldBeAddedToWaitingList(BusDetailsMorning studentWeAreAttemptingToAdd, bool isThereSpaceCheck)
     {
+        //sending the correct email
+        var parent = studentServices.getParentObjectUsingchildUserNameID(studentWeAreAttemptingToAdd.ChildUserNameId); // This is how I get the Parent Details for the email
+        var child = studentServices.GetStudentObjectByChildUserNameID(studentWeAreAttemptingToAdd.ChildUserNameId); // this is how we get the child object
+        EmailSender emailSender = new EmailSender(); // create the object that we will use for the email service 
+
+
         if(isThereSpaceCheck == true)
         {
             //if there is space on the bus, this student will be added to the bus table 
             busRoutServices.addStudentToMorningBus(studentWeAreAttemptingToAdd);
+
+            //send email 
+            emailSender.SuccessfullyAddedToBus(parent.firstName, parent.emailAddress, child.Name, studentWeAreAttemptingToAdd.Area, "Morning ");
         }
         else
         {
@@ -197,6 +206,9 @@
             studentToAdd.TakingBusEndDate = studentWeAreAttemptingToAdd.TakingBusEndDate;
 
             busRoutServices.addStudentToWaitingList(studentToAdd);
+
+            //send email 
+            emailSender.AddedToWaitingList(parent.firstName, parent.emailAddress, child.Name, studentWeAreAttemptingToAdd.Area);
         }
     }
 
@@ -211,39 +223,39 @@
     //create a class from a List of fixed bus details
     public BusDetailsMorning busOneTripDetails = new BusDetailsMorning()
         {
-            BusNumber = 1,
-            BusLimit = 1,
-            BusRouteAAddress = "Corner of Panorama and Marabou Road",
-            BusRouteAPickupTime = "6:22",
-            BusRouteBAddress = "Corner of Kolgansstraat and Skimmerstraat",
-            BusRouteBPickupTime = "6:30",
-            MorningTrip = true,
-            Area = "Rooihuiskraal/The Reeds"
+            BusNumber = BusOneMorningTripDetails.BusNumber,
+            BusLimit = BusOneMorningTripDetails.BusLimit,
+            BusRouteAAddress = BusOneMorningTripDetails.BusRouteAAddress,
+            BusRouteAPickupTime = BusOneMorningTripDetails.BusRouteAPickupTime,
+            BusRouteBAddress = BusOneMorningTripDetails.BusRouteBAddress,
+            BusRouteBPickupTime = BusOneMorningTripDetails.BusRouteBPickupTime,
+            MorningTrip = BusOneMorningTripDetails.MorningTrip,
+            Area = BusOneMorningTripDetails.Area
             
         };
 
     public BusDetailsMorning busTwoTripDetails = new BusDetailsMorning()
         {
-            BusNumber = 2,
-            BusLimit = 1,
-            BusRouteAAddress = "Corner of Reddersburg Street and Mafeking Drive",
-            BusRouteAPickupTime = "6:25",
-            BusRouteBAddress = "Corner of Theuns van Niekerkstraat and Roosmarynstraat",
-            BusRouteBPickupTime = "6:35",
-            MorningTrip = true,
-            Area = "Wierdapark/Amberfield"
+            BusNumber = BusTwoMorningTripDetails.BusNumber,
+            BusLimit = BusTwoMorningTripDetails.BusLimit,
+            BusRouteAAddress = BusTwoMorningTripDetails.BusRouteAAddress,
+            BusRouteAPickupTime = BusTwoMorningTripDetails.BusRouteAPickupTime,
+            BusRouteBAddress = BusTwoMorningTripDetails.BusRouteBAddress,
+            BusRouteBPickupTime = BusTwoMorningTripDetails.BusRouteBPickupTime,
+            MorningTrip = BusTwoMorningTripDetails.MorningTrip,
+            Area = BusTwoMorningTripDetails.Area
         };
 
     public BusDetailsMorning busThreeTripDetails = new BusDetailsMorning()
         {
-            BusNumber = 3,
-            BusLimit = 1,
-            BusRouteAAddress = "Corner of Jasper Drive and Tieroog Street",
-            BusRouteAPickupTime = "6:20",
-            BusRouteBAddress = "Corner of Louise Street and Von Willich Drive",
-            BusRouteBPickupTime = "6:40",
-            MorningTrip = true,
-            Area = "Centurion"
+            BusNumber = BusThreeMorningTripDetails.BusNumber,
+            BusLimit = BusThreeMorningTripDetails.BusLimit,
+            BusRouteAAddress = BusThreeMorningTripDetails.BusRouteAAddress,
+            BusRouteAPickupTime = BusThreeMorningTripDetails.BusRouteAPickupTime,
+            BusRouteBAddress = BusThreeMorningTripDetails.BusRouteBAddress,
+            BusRouteBPickupTime = BusThreeMorningTripDetails.BusRouteBPickupTime,
+            MorningTrip = BusThreeMorningTripDetails.MorningTrip,
+            Area = BusThreeMorningTripDetails.Area
         };
 
 

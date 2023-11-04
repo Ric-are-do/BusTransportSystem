@@ -4,26 +4,32 @@
 @inject AdministratorServices administratorLoginServices;
 @page "/AdministarotPage/{Id}"
 
-<PageTitle>Administrator Landing Page </PageTitle>
-<h3>AdministratorPage</h3>
+<PageTitle>Administrator Landing Page</PageTitle>
 
-<h1> @thisAdministrator.initials : @thisAdministrator.surname</h1>
+<div class="container text-center mt-5">
+    <h3>Administrator Page</h3>
+    <h1 class="mb-4">@($"{thisAdministrator.initials} : {thisAdministrator.surname}")</h1>
 
-@*Lets show all the different lists that the administrator should be able to see *@
+    <h1 class="mb-4">Show the Entire Waiting List</h1>
+    <div class="mb-4 text-center">
+        <DisplayWaitingList />
+    </div>
 
-<h1> Show the entire waiting List</h1>
-<DisplayWaitingList  />
-<DisplayStudentsOnBusList />
+    <h1 class="mb-4">Students on Bus List</h1>
+    <div class="mb-4 text-center">
+        <DisplayStudentsOnBusList />
+    </div>
 
-<br />
+    <h1 class="mb-4">Daily MIS Reports</h1>
+    <div class="mb-4 text-center">
+        <DailyMISStudentsOnBussesbyDay />
+    </div>
 
-<h1>Daily MIS reports </h1>
-<DailyMISStudentsOnBussesbyDay />
-
-<br>
-
-<h1>Weekly Mis report</h1>
-<WeeklyMISStudentsOnBussesByWeek />
+    <h1 class="mb-4">Weekly MIS Report</h1>
+    <div class="text-center">
+        <WeeklyMISStudentsOnBussesByWeek />
+    </div>
+</div>
 
 
 @code {

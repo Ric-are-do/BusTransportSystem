@@ -1,55 +1,319 @@
 ﻿@inject AdministratorServices administratorServices
 @inject StudentService studentsServices;
 
-<h3>DisplayWaitingList</h3>
 
-<table class="table table-hover text-uppercase align-content-center">
-    <thead class="table-primary">
+
+    <div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h2 class="mb-4">Summary</h2>
+            <h3>Display Waiting List</h3>
+            <p>Below are the students who are currently on the waiting list, categorized by bus number.</p>
+            <p>Number of students on Waiting List: @numberOfStudentsOnWaitingList</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="bg-light p-4 mb-4 border border-dark">
+                <h4>Morning Buses</h4>
+                <p>Number of students on Morning Bus One: @numberOfStudentsOnWaitingListForMorningBus1</p>
+                <p>Number of students on Morning Bus Two: @numberOfStudentsOnWaitingListForMorningBus2</p>
+                <p>Number of students on Morning Bus Three: @numberOfStudentsOnWaitingListForMorningBus3</p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="bg-light p-4 mb-4 border border-dark">
+                <h4>Afternoon Buses</h4>
+                <p>Number of students on Afternoon Bus One: @numberOfStudentsOnWaitingListForAfternoonBus1</p>
+                <p>Number of students on Afternoon Bus Two: @numberOfStudentsOnWaitingListForAfternoonBus2</p>
+                <p>Number of students on Afternoon Bus Three: @numberOfStudentsOnWaitingListForAfternoonBus3</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container mt-5">
+    <h3>Bus 1: ROOIHUISKRAAL/THE REEDS</h3>
+    <table class="table table-bordered table-hover text-uppercase">
         <!-- Table header row -->
-        <tr>
-            <th>Name</th>
-            <th>Surname</th>
-            <th>Cellphone Number</th>
-            <th>Grade</th>
-            <th>Area</th>
-            <th>BusNumber</th>
-            <th>Start Date </th>
-            <th>End Date</th>
-            <th>Date Created</th>
-            <th>Time Created</th>
-            
-            <!-- Add more header cells as needed -->
-        </tr>
-    </thead>
-    <tbody>
-        <!-- Table body rows -->
-        @foreach (var item in studentsOnWaitingList)
-        {
-            <tr class="align-content-lg-center">
-                <td> @childUserName(item.ChildUserNameId).Name</td>
-                <td> @childUserName(item.ChildUserNameId).Surname</td>
-                <td> @childUserName(item.ChildUserNameId).CellphoneNumber</td>
-                <td> @childUserName(item.ChildUserNameId).Grade</td>
-                <td> @item.Area</td>
-                <td> @item.BusNumber</td>
-                <td> @item.TakingBusStartDate</td>
-                <td> @item.TakingBusEndDate</td>
-                <td> @item.DateEntryCreated</td>
-                <td> @item.TimeEntryCreated</td>
-
+        <thead class="table-primary text-center">
+            <tr style="font-size: 14px;">
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Cellphone Number</th>
+                <th>Grade</th>
+                <th>Area</th>
+                <th>Bus Number</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Date Created</th>
+                <th>Time Created</th>
+                <th>Morning</th>
+                <th style="width: 80px;">Add To Bus</th>
+                <th style="width: 80px;">Delete Student</th>
+                <!-- Add more header cells as needed -->
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            <!-- Table body rows for Bus 1 -->
+            @foreach (var item in studentsOnWaitingList.Where(s => s.BusNumber == 1))
+            {
+                <tr style="height: 30px; text-align: center; font-size: 12px;">
+                    <td>@childUserName(item.ChildUserNameId).Name</td>
+                    <td>@childUserName(item.ChildUserNameId).Surname</td>
+                    <td>@childUserName(item.ChildUserNameId).CellphoneNumber</td>
+                    <td>@childUserName(item.ChildUserNameId).Grade</td>
+                    <td>@item.Area</td>
+                    <td>@item.BusNumber</td>
+                    <td>@item.TakingBusStartDate</td>
+                    <td>@item.TakingBusEndDate</td>
+                    <td>@item.DateEntryCreated</td>
+                    <td>@item.TimeEntryCreated</td>
+                    <td>@item.MorningTrip</td>
+                    <td><button class="btn btn-primary btn-sm" style="width: 80px;">Add</button></td>
+                    <td><button class="btn btn-primary btn-sm" style="width: 80px;">Delete</button></td>
+                </tr>
+                <!-- Add your if statements here -->
+                @if (item.MorningTrip == true)
+                {
+                    if (item.BusNumber == 1)
+                    {
+                        numberOfStudentsOnWaitingListForMorningBus1++;
+                    }
+                    else if (item.BusNumber == 2)
+                    {
+                        numberOfStudentsOnWaitingListForMorningBus2++;
+                    }
+                    else if (item.BusNumber == 3)
+                    {
+                        numberOfStudentsOnWaitingListForMorningBus3++;
+                    }
+                }
+                else
+                {
+                    if (item.BusNumber == 1)
+                    {
+                        numberOfStudentsOnWaitingListForAfternoonBus1++;
+                    }
+                    else if (item.BusNumber == 2)
+                    {
+                        numberOfStudentsOnWaitingListForAfternoonBus2++;
+                    }
+                    else if (item.BusNumber == 3)
+                    {
+                        numberOfStudentsOnWaitingListForAfternoonBus3++;
+                    }
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="container mt-5">
+    <h3>Bus 2 : WIERDAPARK/AMBERFIELD	</h3>
+    <table class="table table-bordered table-hover text-uppercase">
+        <!-- Table header row -->
+        <thead class="table-primary text-center">
+            <tr style="font-size: 14px;">
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Cellphone Number</th>
+                <th>Grade</th>
+                <th>Area</th>
+                <th>Bus Number</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Date Created</th>
+                <th>Time Created</th>
+                <th>Morning</th>
+                <th style="width: 80px;">Add To Bus</th>
+                <th style="width: 80px;">Delete Student</th>
+                <!-- Add more header cells as needed -->
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Table body rows for Bus 2 -->
+            @foreach (var item in studentsOnWaitingList.Where(s => s.BusNumber == 2))
+            {
+                <tr style="height: 30px; text-align: center; font-size: 12px;">
+                    <td>@childUserName(item.ChildUserNameId).Name</td>
+                    <td>@childUserName(item.ChildUserNameId).Surname</td>
+                    <td>@childUserName(item.ChildUserNameId).CellphoneNumber</td>
+                    <td>@childUserName(item.ChildUserNameId).Grade</td>
+                    <td>@item.Area</td>
+                    <td>@item.BusNumber</td>
+                    <td>@item.TakingBusStartDate</td>
+                    <td>@item.TakingBusEndDate</td>
+                    <td>@item.DateEntryCreated</td>
+                    <td>@item.TimeEntryCreated</td>
+                    <td>@item.MorningTrip</td>
+                    <td><button class="btn btn-primary btn-sm" style="width: 80px;">Add</button></td>
+                    <td><button class="btn btn-primary btn-sm" style="width: 80px;">Delete</button></td>
+                </tr>
+                <!-- Add your if statements here -->
+                @if (item.MorningTrip == true)
+                {
+                    if (item.BusNumber == 1)
+                    {
+                        numberOfStudentsOnWaitingListForMorningBus1++;
+                    }
+                    else if (item.BusNumber == 2)
+                    {
+                        numberOfStudentsOnWaitingListForMorningBus2++;
+                    }
+                    else if (item.BusNumber == 3)
+                    {
+                        numberOfStudentsOnWaitingListForMorningBus3++;
+                    }
+                }
+                else
+                {
+                    if (item.BusNumber == 1)
+                    {
+                        numberOfStudentsOnWaitingListForAfternoonBus1++;
+                    }
+                    else if (item.BusNumber == 2)
+                    {
+                        numberOfStudentsOnWaitingListForAfternoonBus2++;
+                    }
+                    else if (item.BusNumber == 3)
+                    {
+                        numberOfStudentsOnWaitingListForAfternoonBus3++;
+                    }
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="container mt-5">
+    <h3>Bus 3: CENTURION</h3>
+    <table class="table table-bordered table-hover text-uppercase">
+        <!-- Table header row -->
+        <thead class="table-primary text-center">
+            <tr style="font-size: 14px;">
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Cellphone Number</th>
+                <th>Grade</th>
+                <th>Area</th>
+                <th>Bus Number</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Date Created</th>
+                <th>Time Created</th>
+                <th>Morning</th>
+                <th style="width: 80px;">Add To Bus</th>
+                <th style="width: 80px;">Delete Student</th>
+                <!-- Add more header cells as needed -->
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Table body rows for Bus 3 -->
+            @foreach (var item in studentsOnWaitingList.Where(s => s.BusNumber == 3))
+            {
+                <tr style="height: 30px; text-align: center; font-size: 12px;">
+                    <td>@childUserName(item.ChildUserNameId).Name</td>
+                    <td>@childUserName(item.ChildUserNameId).Surname</td>
+                    <td>@childUserName(item.ChildUserNameId).CellphoneNumber</td>
+                    <td>@childUserName(item.ChildUserNameId).Grade</td>
+                    <td>@item.Area</td>
+                    <td>@item.BusNumber</td>
+                    <td>@item.TakingBusStartDate</td>
+                    <td>@item.TakingBusEndDate</td>
+                    <td>@item.DateEntryCreated</td>
+                    <td>@item.TimeEntryCreated</td>
+                    <td>@item.MorningTrip</td>
+                    <td><button class="btn btn-primary btn-sm" style="width: 80px;">Add</button></td>
+                    <td><button class="btn btn-primary btn-sm" style="width: 80px;">Delete</button></td>
+                </tr>
+                <!-- Add your if statements here -->
+                @if (item.MorningTrip == true)
+                {
+                    if (item.BusNumber == 1)
+                    {
+                        numberOfStudentsOnWaitingListForMorningBus1++;
+                    }
+                    else if (item.BusNumber == 2)
+                    {
+                        numberOfStudentsOnWaitingListForMorningBus2++;
+                    }
+                    else if (item.BusNumber == 3)
+                    {
+                        numberOfStudentsOnWaitingListForMorningBus3++;
+                    }
+                }
+                else
+                {
+                    if (item.BusNumber == 1)
+                    {
+                        numberOfStudentsOnWaitingListForAfternoonBus1++;
+                    }
+                    else if (item.BusNumber == 2)
+                    {
+                        numberOfStudentsOnWaitingListForAfternoonBus2++;
+                    }
+                    else if (item.BusNumber == 3)
+                    {
+                        numberOfStudentsOnWaitingListForAfternoonBus3++;
+                    }
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
 
 @code {
+    // Boolean flag to track whether summary variables have been calculated
+    private bool summaryCalculated = false;
+
     public List<WaitingListDetails> studentsOnWaitingList = new List<WaitingListDetails>();
     public List<StudentDetails> studnetDetails = new List<StudentDetails>();
 
+    // variables for summary of waiting list Counter
+    int numberOfStudentsOnWaitingList = 0;
+
+    int numberOfStudentsOnWaitingListForMorningBus1 = 0;
+    int numberOfStudentsOnWaitingListForMorningBus2 = 0;
+    int numberOfStudentsOnWaitingListForMorningBus3 = 0;
+    int numberOfStudentsOnWaitingListForAfternoonBus1 =0 ;
+    int numberOfStudentsOnWaitingListForAfternoonBus2 = 0;
+    int numberOfStudentsOnWaitingListForAfternoonBus3 = 0;
+
+
     protected override async Task OnInitializedAsync()
     {
-        studentsOnWaitingList = administratorServices.GetStudentsOnWaitingList();        
+        studentsOnWaitingList = administratorServices.GetStudentsOnWaitingList();
+        numberOfStudentsOnWaitingList = studentsOnWaitingList.Count();
+
+        // Check if summary variables have already been calculated
+        if (!summaryCalculated)
+        {
+            // Calculate summary variables for Morning Bus 1
+            numberOfStudentsOnWaitingListForMorningBus1 = studentsOnWaitingList.Count(item => item.MorningTrip && item.BusNumber == 1);
+
+            // Calculate summary variables for Morning Bus 2
+            numberOfStudentsOnWaitingListForMorningBus2 = studentsOnWaitingList.Count(item => item.MorningTrip && item.BusNumber == 2);
+
+            // Calculate summary variables for Morning Bus 3
+            numberOfStudentsOnWaitingListForMorningBus3 = studentsOnWaitingList.Count(item => item.MorningTrip && item.BusNumber == 3);
+
+            // Calculate summary variables for Afternoon Bus 1
+            numberOfStudentsOnWaitingListForAfternoonBus1 = studentsOnWaitingList.Count(item => !item.MorningTrip && item.BusNumber == 1);
+
+            // Calculate summary variables for Afternoon Bus 2
+            numberOfStudentsOnWaitingListForAfternoonBus2 = studentsOnWaitingList.Count(item => !item.MorningTrip && item.BusNumber == 2);
+
+            // Calculate summary variables for Afternoon Bus 3
+            numberOfStudentsOnWaitingListForAfternoonBus3 = studentsOnWaitingList.Count(item => !item.MorningTrip && item.BusNumber == 3);
+
+            // Call StateHasChanged to re-render the component after updating the variables
+            StateHasChanged();
+        }
     }
+
 
     public StudentDetails childUserName(string userName )
     {
@@ -57,5 +321,8 @@
         return thisStudentsDetails;
 
     }
+
+    // counter for the total number of students on each bus waiting list 
+    
 
 }

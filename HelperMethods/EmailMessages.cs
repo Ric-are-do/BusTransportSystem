@@ -1,4 +1,6 @@
-﻿using BusServiceApplication.Pages.Parent_Componenets;
+﻿using BusServiceApplication.Data.Models;
+using BusServiceApplication.Pages.BusRoutComponenet;
+using BusServiceApplication.Pages.Parent_Componenets;
 
 namespace BusServiceApplication.HelperMethods
 {
@@ -39,12 +41,24 @@ namespace BusServiceApplication.HelperMethods
                 $"<p> We have added {childname} to the waiting list and will inform you if a space opens  </p> \n" +
                 $"<p>Should you have any querries, please contact us on 081244094  </p> " +
                 $"<p>kind Regards  </p> \n" +
-                $"<p>The bus service team </p>";
+                $"<p>The Bus Service team </p>";
+
+            return message;
+        }
+
+        public static string ChildMovedFromWaitingListMorning(string parentName, StudentDetails student )
+        {
+            string message = 
+            $"<h1> Greetings {parentName} </h1> \n " +
+                $"<p> We are happy To inform you that {student.Name} has been moved off the waiting list </p> \n" +
+                $"<p>should you have any querries , please contact us on 0812440694> </p> \n" +
+                $"<p>Kind Regards </p> \n" +
+                $"<p>the Bus Service Team </p>";
 
             return message;
 
-
         }
+
     }
 
 

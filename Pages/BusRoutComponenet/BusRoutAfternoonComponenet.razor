@@ -169,7 +169,7 @@
             busRoutServices.addStudentToAfternoonBus(studentWeAreAttemptingToAdd);
             emailSender.SuccessfullyAddedToBus(parent.firstName, parent.emailAddress, child.Name, studentWeAreAttemptingToAdd.Area , "Afternoon ");
 
-            
+
             //lets get the parent ID and then email the parent 
         }
         else
@@ -198,7 +198,7 @@
             emailSender.AddedToWaitingList(parent.firstName, parent.emailAddress, child.Name, studentWeAreAttemptingToAdd.Area);
 
             //fire email for Waiting list 
-            
+
         }
     }
 
@@ -209,43 +209,41 @@
     }
 
 
-
     //create a class from a List of fixed bus details
     public BusDetailsAfternoon busOneTripDetails = new BusDetailsAfternoon()
         {
-            BusNumber = 1,
-            BusLimit = 1,
-            BusRouteAAddress = "Corner of Panorama and Marabou Road",
-            BusRouteAPickupTime = "14:30",
-            BusRouteBAddress = "Corner of Kolgansstraat and Skimmerstraat",
-            BusRouteBPickupTime = "14:40",
-            MorningTrip = false,
-            Area = "Rooihuiskraal/The Reeds"
-
+            BusNumber = BusOneAfternoonTripDetails.BusNumber,
+            BusLimit = BusOneAfternoonTripDetails.BusLimit,
+            BusRouteAAddress = BusOneAfternoonTripDetails.BusRouteAAddress,
+            BusRouteAPickupTime = BusOneAfternoonTripDetails.BusRouteAPickupTime,
+            BusRouteBAddress = BusOneAfternoonTripDetails.BusRouteBAddress,
+            BusRouteBPickupTime = BusOneAfternoonTripDetails.BusRouteBPickupTime,
+            MorningTrip = BusOneAfternoonTripDetails.MorningTrip,
+            Area = BusOneAfternoonTripDetails.Area,
         };
 
     public BusDetailsAfternoon busTwoTripDetails = new BusDetailsAfternoon()
         {
-            BusNumber = 2,
-            BusLimit = 10,
-            BusRouteAAddress = "Corner of Reddersburg Street and Mafeking Drive",
-            BusRouteAPickupTime = "14:25",
-            BusRouteBAddress = "Corner of Theuns van Niekerkstraat and Roosmarynstraat",
-            BusRouteBPickupTime = "14:30",
-            MorningTrip = false,
-            Area = "Wierdapark/Amberfield"
+            BusNumber = BusTwoAfternoonTripDetails.BusNumber,
+            BusLimit = BusTwoAfternoonTripDetails.BusLimit,
+            BusRouteAAddress = BusTwoAfternoonTripDetails.BusRouteAAddress,
+            BusRouteAPickupTime = BusTwoAfternoonTripDetails.BusRouteAPickupTime,
+            BusRouteBAddress = BusTwoAfternoonTripDetails.BusRouteBAddress,
+            BusRouteBPickupTime = BusTwoAfternoonTripDetails.BusRouteBPickupTime,
+            MorningTrip = BusTwoAfternoonTripDetails.MorningTrip,
+            Area = BusTwoAfternoonTripDetails.Area,
         };
 
     public BusDetailsAfternoon busThreeTripDetails = new BusDetailsAfternoon()
         {
-            BusNumber = 3,
-            BusLimit = 10,
-            BusRouteAAddress = "Corner of Jasper Drive and Tieroog Street",
-            BusRouteAPickupTime = "14:30",
-            BusRouteBAddress = "Corner of Louise Street and Von Willich Drive",
-            BusRouteBPickupTime = "14:40",
-            MorningTrip = false,
-            Area = "Centurion"
+            BusNumber = BusThreeAfternoonTripDetails.BusNumber,
+            BusLimit = BusThreeAfternoonTripDetails.BusLimit,
+            BusRouteAAddress = BusThreeAfternoonTripDetails.BusRouteAAddress,
+            BusRouteAPickupTime = BusThreeAfternoonTripDetails.BusRouteAPickupTime,
+            BusRouteBAddress = BusThreeAfternoonTripDetails.BusRouteBAddress,
+            BusRouteBPickupTime = BusThreeAfternoonTripDetails.BusRouteBPickupTime,
+            MorningTrip = BusThreeAfternoonTripDetails.MorningTrip,
+            Area = BusThreeAfternoonTripDetails.Area,
         };
 
 
