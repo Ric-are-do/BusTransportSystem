@@ -58,6 +58,7 @@ namespace BusServiceApplication.Services
             using (var context = _dbComtextFactory.CreateDbContext())
             {
                 var UserName = context.loginProfile.SingleOrDefault(x => x.emailAddress == emailAddress);
+                var UserNamePassword = UserName.password;
                 var UserPassword = context.loginProfile.SingleOrDefault(y => y.password == passowrd);
                 if (UserName == null || UserPassword == null)
                 {

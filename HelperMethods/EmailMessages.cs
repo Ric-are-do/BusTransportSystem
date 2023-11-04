@@ -18,12 +18,12 @@ namespace BusServiceApplication.HelperMethods
         }
 
 
-        public static string ChildAddedToBus(string parentName , string childName , string busdetails)
+        public static string ChildAddedToBus(string parentName , string childName , string busdetails, string bustTime)
         {
             var message =
                 $"<h1> Greetings {parentName} </h1> \n " +
-                $"<p> We are happy to inform you that you have successfully booked a place for {childName} on  </p> " +
-                $"<p>{busdetails}  </p> \n" +
+                $"<p> We are happy to inform you that you have successfully booked a place for {childName} on the </p> " +
+                $"<p>{busdetails} bus route during {bustTime} </p> \n" +
                 $"<p>Should you have any querries, please contact us on 081244094  </p> \n " +
                 $"<p>kind regards \n " +
                 $"<p>The Bus Service Team </p>";
@@ -31,11 +31,11 @@ namespace BusServiceApplication.HelperMethods
             return message;
         }
 
-        public static string ChildAddedToWaitingList(string parentName , string childname, string busdetails)
+        public static string ChildAddedToWaitingList(string parentName , string childname, string busdetails )
         {
             var message =
             $"<h1> Greetings {parentName} </h1> \n " +
-                $"<p> Based on the bus rout selected, all seats on the current {busdetails} are currently booled  </p> \n" +
+                $"<p> Based on the bus rout selected, all seats on the current route : {busdetails} are currently booked  </p> \n" +
                 $"<p> We have added {childname} to the waiting list and will inform you if a space opens  </p> \n" +
                 $"<p>Should you have any querries, please contact us on 081244094  </p> " +
                 $"<p>kind Regards  </p> \n" +

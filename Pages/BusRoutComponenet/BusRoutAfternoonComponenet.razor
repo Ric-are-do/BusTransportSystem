@@ -115,6 +115,8 @@
     }
 
 
+    // get parents details from the student we want to add and then email them. 
+
 
     public void HandleAddingStudentToBus(EditContext editContext)
     {
@@ -127,6 +129,8 @@
         newStudentToAddToBus.ChildUserNameId = selectedStudentForForm;
         newStudentToAddToBus.TakingBusStartDate = selectedStartDate;
         newStudentToAddToBus.TakingBusEndDate = selectedEndDate;
+
+        // get details for parent of this student 
         isSpaceOnBus = busRoutServices.checkSpaceOnTheBusAfternoon(newStudentToAddToBus);
         informUserIfThereIsSpaceAvailable(isSpaceOnBus);
         determineIfStudentShouldBeAddedToWaitingList(newStudentToAddToBus, isSpaceOnBus);
@@ -154,13 +158,23 @@
 
     public void determineIfStudentShouldBeAddedToWaitingList(BusDetailsAfternoon studentWeAreAttemptingToAdd, bool isThereSpaceCheck)
     {
+        //sending the correct email
+        var parent = studentServices.getParentObjectUsingchildUserNameID(studentWeAreAttemptingToAdd.ChildUserNameId); // This is how I get the Parent Details for the email
+        var child = studentServices.GetStudentObjectByChildUserNameID(studentWeAreAttemptingToAdd.ChildUserNameId); // this is how we get the child object
+        EmailSender emailSender = new EmailSender();
+
         if (isThereSpaceCheck == true)
         {
             //if there is space on the bus, this student will be added to the bus table
             busRoutServices.addStudentToAfternoonBus(studentWeAreAttemptingToAdd);
+            emailSender.SuccessfullyAddedToBus(parent.firstName, parent.emailAddress, child.Name, studentWeAreAttemptingToAdd.Area , "Afternoon ");
+
+            
+            //lets get the parent ID and then email the parent 
         }
         else
         {
+
             // Here we take the student details componenet that we wanted to add to the list
             // write the variables to the WaitingListDetialsClass
             // Add this WaitingListDetails object to the waiting List table
@@ -181,6 +195,10 @@
             studentToAdd.TakingBusEndDate = studentWeAreAttemptingToAdd.TakingBusEndDate;
 
             busRoutServices.addStudentToWaitingList(studentToAdd);
+            emailSender.AddedToWaitingList(parent.firstName, parent.emailAddress, child.Name, studentWeAreAttemptingToAdd.Area);
+
+            //fire email for Waiting list 
+            
         }
     }
 
@@ -209,7 +227,7 @@
     public BusDetailsAfternoon busTwoTripDetails = new BusDetailsAfternoon()
         {
             BusNumber = 2,
-            BusLimit = 1,
+            BusLimit = 10,
             BusRouteAAddress = "Corner of Reddersburg Street and Mafeking Drive",
             BusRouteAPickupTime = "14:25",
             BusRouteBAddress = "Corner of Theuns van Niekerkstraat and Roosmarynstraat",
@@ -221,7 +239,7 @@
     public BusDetailsAfternoon busThreeTripDetails = new BusDetailsAfternoon()
         {
             BusNumber = 3,
-            BusLimit = 1,
+            BusLimit = 10,
             BusRouteAAddress = "Corner of Jasper Drive and Tieroog Street",
             BusRouteAPickupTime = "14:30",
             BusRouteBAddress = "Corner of Louise Street and Von Willich Drive",

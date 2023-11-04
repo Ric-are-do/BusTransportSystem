@@ -59,6 +59,26 @@ public class StudentService
     //Filter the studetns that belong to a specific parent and return them as objects
 
 
+
+    //--------------------------------------------------------------------------
+    //Get a parent object from a student object 
+    //Here we pass in the ID of the child , then get the parent ID , from there we search the loginProfile for the parent ID and return the parent as an object
+    //I plan on using this for the emails
+    public ParentDetails getParentObjectUsingchildUserNameID(string childUserNameID)
+    {
+        using (var context = _dbContextFactory.CreateDbContext())
+        {
+            var parentID = context.studentDetails.SingleOrDefault(x => x.childUserNameId == childUserNameID);
+            int Id =  parentID.ParentId;
+            var parent  = context.loginProfile.SingleOrDefault(x => x.Id == Id);
+            return parent;
+
+        }
+     }
+
+    
+
+
 }
 
 
