@@ -2,6 +2,7 @@
 @using BusServiceApplication.Data.Models
 @using System.Diagnostics;
 @using BusServiceApplication.Services;
+@using BusServiceApplication.HelperMethods;
 @using BusServiceApplication.Pages;
 @inject LoginPageService loginPageService
 @inject NavigationManager navigationManager
@@ -36,6 +37,7 @@
 
 @code {
     ParentDetails User = new ParentDetails();
+    EmailSender emailSenderObject = new EmailSender();
 
     public void HandleRegistration(EditContext editContext)
     {
@@ -45,11 +47,14 @@
         loginPageService.CheckThatCredenetailsAreUnique(newUser.username, newUser.emailAddress);
         loginPageService.RegisterANewUser(newUser);
         Debug.WriteLine($"Submit {User.emailAddress}, {User.password} ");
-        var GetTheNewPersonObject = loginPageService.GetParentObject(newUser.emailAddress, newUser.password);
+        var GetTheNewPersonObject = loginPageService.GetParentObject(newUser.emailAddress, newUser.password); 
+
+        //Email Object 
+        var message = emailSenderObject.RegisterationEmail(newUser.firstName, newUser.emailAddress);
+
         navigationManager.NavigateTo($"/ParentPage/{GetTheNewPersonObject.username}");
 
-
-
     }
+
 
 }

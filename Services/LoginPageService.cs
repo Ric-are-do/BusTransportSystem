@@ -5,7 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Components;
 using System.Net.Mail;
-
+using BusServiceApplication.HelperMethods;
+using Org.BouncyCastle.Security;
 
 namespace BusServiceApplication.Services
 {
@@ -21,7 +22,7 @@ namespace BusServiceApplication.Services
         // All methods that we will implement with the Login Services are noted below 
 
         //Registration Methods 
-        public void RegisterANewUser(ParentDetails User)
+        public async void RegisterANewUser(ParentDetails User)
         {
             using (var context = _dbComtextFactory.CreateDbContext()) 
             { 

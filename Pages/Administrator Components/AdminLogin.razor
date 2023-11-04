@@ -3,6 +3,7 @@
 @using System.Diagnostics;
 @using BusServiceApplication.Services;
 @using BusServiceApplication.Pages;
+@using BusServiceApplication.HelperMethods;
 @inject LoginPageService loginPageService
 @inject NavigationManager navigationManager
 
@@ -23,10 +24,28 @@
 
 </EditForm>
 
+@* <button @onclick="SendEmail">SendEmail</button>*@
+
 
 
 @code {
     public AdministrationDetails ExistingUser = new AdministrationDetails();
+
+    private string message = string.Empty;
+
+    /*
+    private async Task SendEmail()
+    {
+        try
+        {
+            message = await EmailSender.RegisterationEmail();
+        }
+        catch(Exception message)
+        {
+            Debug.Write(message);
+        }
+    }
+    */
 
     public void HandleLogin(EditContext editContext)
     {

@@ -3,6 +3,7 @@
 @using System.Diagnostics;
 @using BusServiceApplication.Services;
 @using BusServiceApplication.Pages;
+@using BusServiceApplication.HelperMethods;
 @inject LoginPageService loginPageService
 @inject NavigationManager navigationManager
 
@@ -33,7 +34,7 @@
     public ParentDetails ExistingUser = new ParentDetails();
 
 
-    public void HandleLogin(EditContext editContext)
+    public async void HandleLogin(EditContext editContext)
     {
         // need to get the entry from the database
         // need to complete validation on the front end
@@ -46,7 +47,12 @@
         var PersonObjectIamGetting = loginPageService.GetParentObject(ExistingUser.emailAddress, ExistingUser.password);
 
 
+
         //this is how we will handle routing and pass the value to the URL and then we will store that value in a parameter within
         navigationManager.NavigateTo($"/ParentPage/{PersonObjectIamGetting.username}");
     }
+
+
+
+
 }
