@@ -86,7 +86,7 @@ namespace BusServiceApplication.HelperMethods
                     mail.Body = EmailMessages.ChildAddedToWaitingList(parentName, childName, busDetails);
                     mail.IsBodyHtml = true;
 
-                    using (SmtpClient smtp = new SmtpClient("smtp.outlook.com", 587))
+                    using (SmtpClient smtp = new SmtpClient("mtp.office365.com", 587))
                     {
                         smtp.Credentials = new System.Net.NetworkCredential(
                             "ImpumeleloBusServiceBookingSystem@outlook.com", "Password123!@#");

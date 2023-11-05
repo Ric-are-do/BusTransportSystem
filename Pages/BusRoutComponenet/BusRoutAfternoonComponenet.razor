@@ -7,93 +7,99 @@
 @inject StudentService studentServices;
 @inject NavigationManager navigationManager;
 
-<h1>BusRoutAfternoonComponenet</h1>
-<br />
-<br />
+<div class="container mt-5" style="background-color: #f8f9fa; padding: 20px;">
+    <h1 class="text-center mb-4">Afternoon Trip</h1>
 
+    <h3 class="text-center mb-4">Select the dates between which you want to book</h3>
 
-<EditForm Model="busDetailsAfternoon" OnValidSubmit="HandleAddingStudentToBus">
-    <h3> Select an area for pick up</h3>
-    <h3>Which Student are you setting the details </h3>
-    <select @bind="@selectedStudentForForm" class="form-select-lg  aria-label=Default"> @* this is where we generate the list for parents *@
-        <option selected> Select A student </option>
-        @foreach (var item in listOfStudents)
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-6">
+                <CalanderStartDate StartDate="selectedStartDate" StartDateChanged="HandleStartDateChanged" />
+            </div>
+            <div class="col-6">
+                <CalanderEndDate EndDate="selectedEndDate" EndDateChanged="HandleEndDateChanged" />
+                <br />
+            </div>
+        </div>
+    </div>
+
+        <EditForm Model="busDetailsAfternoon" OnValidSubmit="HandleAddingStudentToBus">
+        <div class="mb-4 text-center">
+            <label for="selectedStudent" class="form-label font-weight-bold mb-2">Which Student would you like to book for</label>
+            <select @bind="@selectedStudentForForm" class="form-select" id="selectedStudent">
+                <option selected disabled>Select A student</option>
+                @foreach (var item in listOfStudents)
+                {
+                    <option value="@item.childUserNameId">@item.Name, @item.Surname</option>
+                }
+            </select>
+        </div>
+
+        <div class="mb-4 text-center">
+            <label for="selectedBusOption" class="form-label font-weight-bold mb-2">Which area would you like to book for</label>
+            <select @bind="selectedBusOption" class="form-select" id="selectedBusOption">
+                <option selected disabled>Select an area</option>
+                <option value="1">Rooihuiskraal/The Reeds</option>
+                <option value="2">Wierdapark/Amberfield</option>
+                <option value="3">Centurion</option>
+            </select>
+        </div>
+
+      @if (selectedBusOption == 1)
         {
-            <option value="@item.childUserNameId">@item.Name , @item.Surname</option>
+            // set the values of the busDetials object to the values in the object at selected
+            busDetailsAfternoon.BusNumber = busOneTripDetails.BusNumber;
+            busDetailsAfternoon.BusLimit = busOneTripDetails.BusLimit;
+            busDetailsAfternoon.BusRouteAAddress = busOneTripDetails.BusRouteAAddress;
+            busDetailsAfternoon.BusRouteAPickupTime = busOneTripDetails.BusRouteAPickupTime;
+            busDetailsAfternoon.BusRouteBAddress = busOneTripDetails.BusRouteBAddress;
+            busDetailsAfternoon.BusRouteBPickupTime = busOneTripDetails.BusRouteBPickupTime;
+            busDetailsAfternoon.MorningTrip = busOneTripDetails.MorningTrip;
+            busDetailsAfternoon.Area = busOneTripDetails.Area;
         }
-    </select>
+        else if (selectedBusOption == 2)
+        {
+            busDetailsAfternoon.BusNumber = busTwoTripDetails.BusNumber;
+            busDetailsAfternoon.BusLimit = busTwoTripDetails.BusLimit;
+            busDetailsAfternoon.BusRouteAAddress = busTwoTripDetails.BusRouteAAddress;
+            busDetailsAfternoon.BusRouteAPickupTime = busTwoTripDetails.BusRouteAPickupTime;
+            busDetailsAfternoon.BusRouteBAddress = busTwoTripDetails.BusRouteBAddress;
+            busDetailsAfternoon.BusRouteBPickupTime = busTwoTripDetails.BusRouteBPickupTime;
+            busDetailsAfternoon.MorningTrip = busTwoTripDetails.MorningTrip;
+            busDetailsAfternoon.Area = busTwoTripDetails.Area;
+        }
+        else if (selectedBusOption == 3)
+        {
+            busDetailsAfternoon.BusNumber = busThreeTripDetails.BusNumber;
+            busDetailsAfternoon.BusLimit = busThreeTripDetails.BusLimit;
+            busDetailsAfternoon.BusRouteAAddress = busThreeTripDetails.BusRouteAAddress;
+            busDetailsAfternoon.BusRouteAPickupTime = busThreeTripDetails.BusRouteAPickupTime;
+            busDetailsAfternoon.BusRouteBAddress = busThreeTripDetails.BusRouteBAddress;
+            busDetailsAfternoon.BusRouteBPickupTime = busThreeTripDetails.BusRouteBPickupTime;
+            busDetailsAfternoon.MorningTrip = busThreeTripDetails.MorningTrip;
+            busDetailsAfternoon.Area = busThreeTripDetails.Area;
+        }
 
-    <br />
+       
+        <div class="text-center mb-4">
+            <button type="submit" class="btn btn-primary">Add Student to List</button>
+        </div>
 
-    <select @bind="selectedBusOption" class="form-select-lg  aria-label=Default select example">
-        <option selected> Select an area </option>
-        <option value=1>Rooihuiskraal/The Reeds</option>
-        <option value=2>Wierdapark/Amberfield</option>
-        <option value=3>Centurion</option>
-    </select>
+            <div class="mt-3">
+            <p><strong>Bus Limit:</strong> @busDetailsAfternoon.BusLimit</p>
+            <p><strong>First Stop:</strong> @busDetailsAfternoon.BusRouteAAddress</p>
+            <p><strong>Arrival Time:</strong> @busDetailsAfternoon.BusRouteAPickupTime</p>
+            <p><strong>Second Stop:</strong> @busDetailsAfternoon.BusRouteBAddress</p>
+            <p><strong>Arrival Time:</strong> @busDetailsAfternoon.BusRouteBPickupTime</p>
+        </div>
 
-    @if (selectedBusOption == 1)
-    {
-        // set the values of the busDetials object to the values in the object at selected
-        busDetailsAfternoon.BusNumber = busOneTripDetails.BusNumber;
-        busDetailsAfternoon.BusLimit = busOneTripDetails.BusLimit;
-        busDetailsAfternoon.BusRouteAAddress = busOneTripDetails.BusRouteAAddress;
-        busDetailsAfternoon.BusRouteAPickupTime = busOneTripDetails.BusRouteAPickupTime;
-        busDetailsAfternoon.BusRouteBAddress = busOneTripDetails.BusRouteBAddress;
-        busDetailsAfternoon.BusRouteBPickupTime = busOneTripDetails.BusRouteBPickupTime;
-        busDetailsAfternoon.MorningTrip = busOneTripDetails.MorningTrip;
-        busDetailsAfternoon.Area = busOneTripDetails.Area;
+    </EditForm>
+    </div>
 
-    }
-    else if (selectedBusOption == 2)
-    {
-        busDetailsAfternoon.BusNumber = busTwoTripDetails.BusNumber;
-        busDetailsAfternoon.BusLimit = busTwoTripDetails.BusLimit;
-        busDetailsAfternoon.BusRouteAAddress = busTwoTripDetails.BusRouteAAddress;
-        busDetailsAfternoon.BusRouteAPickupTime = busTwoTripDetails.BusRouteAPickupTime;
-        busDetailsAfternoon.BusRouteBAddress = busTwoTripDetails.BusRouteBAddress;
-        busDetailsAfternoon.BusRouteBPickupTime = busTwoTripDetails.BusRouteBPickupTime;
-        busDetailsAfternoon.MorningTrip = busTwoTripDetails.MorningTrip;
-        busDetailsAfternoon.Area = busTwoTripDetails.Area;
-    }
-    else if (selectedBusOption == 3)
-    {
-        busDetailsAfternoon.BusNumber = busThreeTripDetails.BusNumber;
-        busDetailsAfternoon.BusLimit = busThreeTripDetails.BusLimit;
-        busDetailsAfternoon.BusRouteAAddress = busThreeTripDetails.BusRouteAAddress;
-        busDetailsAfternoon.BusRouteAPickupTime = busThreeTripDetails.BusRouteAPickupTime;
-        busDetailsAfternoon.BusRouteBAddress = busThreeTripDetails.BusRouteBAddress;
-        busDetailsAfternoon.BusRouteBPickupTime = busThreeTripDetails.BusRouteBPickupTime;
-        busDetailsAfternoon.MorningTrip = busThreeTripDetails.MorningTrip;
-        busDetailsAfternoon.Area = busThreeTripDetails.Area;
-    }
-
-
-    <button type="submit" class="btn-primary"> Add Student to List </button>
-
-
-    <p> Bus Limit : @busDetailsAfternoon.BusLimit</p>
-    <p> First Stop : @busDetailsAfternoon.BusRouteAAddress</p>
-    <p> Arrival Time : @busDetailsAfternoon.BusRouteAPickupTime</p>
-    <p> Second Stop : @busDetailsAfternoon.BusRouteBAddress</p>
-    <p> Arrival Time : @busDetailsAfternoon.BusRouteBPickupTime</p>
-</EditForm>
 
 
 <h1>@messageForBusCapacity</h1> @*This is the where we display the message in for capacity *@
-
-@*How we call the calander functions *@
-<div class="container col-10 border border-primary mt-3">
-    <div class="row">
-    <div class="col - 6 ">
-    <CalanderStartDate StartDate="selectedStartDate" StartDateChanged="HandleStartDateChanged" />
-        </div >
-        <div class="col - 6">
-            <!-- Add the CalendarEndDate component here -->
-            <CalanderEndDate EndDate="selectedEndDate" EndDateChanged="HandleEndDateChanged" />
-        </div>
-    </div>
-</div>
 
 @code {
 

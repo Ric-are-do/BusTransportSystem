@@ -1,6 +1,7 @@
 ﻿@using BusServiceApplication.Services;
 @using BusServiceApplication.Pages.Administrator_Components;
 @using BusServiceApplication.Pages.Administrator_Components.MISReports;
+@using BusServiceApplication.Pages.Administrator_Components;
 @inject AdministratorServices administratorLoginServices;
 @page "/AdministarotPage/{Id}"
 
@@ -8,7 +9,7 @@
 
 <div class="container text-center mt-5">
     <h3>Administrator Page</h3>
-    <h1 class="mb-4">@($"{thisAdministrator.initials} : {thisAdministrator.surname}")</h1>
+   
 
     <h1 class="mb-4">Show the Entire Waiting List</h1>
     <div class="mb-4 text-center">

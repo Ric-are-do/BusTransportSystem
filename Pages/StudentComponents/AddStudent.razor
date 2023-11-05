@@ -1,34 +1,47 @@
 ﻿@using BusServiceApplication.Shared;
 @using BusServiceApplication.HelperMethods;
-
 @inject StudentService studentServices;
 @inject NavigationManager navigationManager;
+@using BusServiceApplication.Shared;
+@using BusServiceApplication.HelperMethods;
 
 
-<h3>AddStudent</h3>
+<h3 class="fw-bold text-center mb-4">Add Student</h3>
 
-<EditForm Model="student" OnValidSubmit="HandleAddingStudent">
-    <label class="form-label"> Student FirstName </label>
-        <InputText id="studentFirstName" @bind-Value="@student.Name" class="form-control" ></InputText>
-    <label class="form-label"> Student Surname </label>
-    <InputText id="studentFirstName" @bind-Value="@student.Surname" class="form-control"></InputText>
-    <label class="form-label"> Student CellphoneNumber </label>
-    <InputText id="studentFirstName" @bind-Value="@student.CellphoneNumber" class="form-control"></InputText>
-    <label class="form-label"> Student Grade </label>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <EditForm Model="student" OnValidSubmit="HandleAddingStudent">
+                <div class="mb-3">
+                    <label for="studentFirstName" class="form-label">Student FirstName</label>
+                    <InputText id="studentFirstName" @bind-Value="@student.Name" class="form-control"></InputText>
+                </div>
+                <div class="mb-3">
+                    <label for="studentSurname" class="form-label">Student Surname</label>
+                    <InputText id="studentSurname" @bind-Value="@student.Surname" class="form-control"></InputText>
+                </div>
+                <div class="mb-3">
+                    <label for="studentCellphoneNumber" class="form-label">Student CellphoneNumber</label>
+                    <InputText id="studentCellphoneNumber" @bind-Value="@student.CellphoneNumber" class="form-control"></InputText>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Student Grade</label>
+                    <select @bind="student.Grade" class="form-select">
+                        <option disabled>Select Grade</option>
+                        @foreach (var item in grades)
+                        {
+                            <option value="@item.Grade">@item.Grade</option>
+                        }
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </EditForm>
+        </div>
+    </div>
+</div>
 
-    @*Grades databinding*@
-    <select @bind="student.Grade">
-        <option>0</option>
-        @foreach(var item in grades)
-        {
-            <option value="@item.Grade">@item.Grade</option>
-        }
-    </select>
 
-    <p1>Debug ParentID : @ParentID</p1>
 
-    <button type="submit" class="form-control  mt-2 btn-primary">Submit</button>
-</EditForm>
 
 @code {
     StudentDetails student = new StudentDetails();

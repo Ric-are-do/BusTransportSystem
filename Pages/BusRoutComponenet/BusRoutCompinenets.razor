@@ -7,104 +7,98 @@
 @inject StudentService studentServices;
 @inject NavigationManager navigationManager; 
 
-<h3>BusRoutCompinenets</h3>
-<h1> Morning Trip </h1>
-<h1> Select an area in the morning </h1>
-<h1> Select an area you would like to view </h1>
 
 
-@* create the form here *@
 
-<EditForm Model="busDetails" OnValidSubmit="HandleAddingStudentToBus">
-    <h3> Select an area for pick up</h3>
-    <h3>Which Student are you setting the details </h3>
-    <select @bind="@selectedStudentForForm" class="form-select-lg  aria-label=Default"> 
-        <option selected> Select A student </option>
-        @foreach(var item in listOfStudents )
-        {
-            <option value="@item.childUserNameId">@item.Name , @item.Surname</option>
-        }
-    </select>
+<div class="container mt-5" style="background-color: #f8f9fa; padding: 20px;">
+    <h1 class="text-center mb-4">Morning Trip</h1>
 
-    <br />
+    <h3 class="text-center mb-4">Select the dates between which you want to book</h3>
 
-    <select @bind="selectedBusOption" class="form-select-lg  aria-label=Default select example">
-        <option selected> Select an area </option>
-        <option value=1>Rooihuiskraal/The Reeds</option>
-        <option value=2>Wierdapark/Amberfield</option>
-        <option value=3>Centurion</option>
-    </select>
-
-    @if (selectedBusOption == 1)
-    {
-        // set the values of the busDetials object to the values in the object at selected 
-        busDetails.BusNumber = busOneTripDetails.BusNumber;
-        busDetails.BusLimit = busOneTripDetails.BusLimit;
-        busDetails.BusRouteAAddress = busOneTripDetails.BusRouteAAddress;
-        busDetails.BusRouteAPickupTime = busOneTripDetails.BusRouteAPickupTime;
-        busDetails.BusRouteBAddress = busOneTripDetails.BusRouteBAddress;
-        busDetails.BusRouteBPickupTime = busOneTripDetails.BusRouteBPickupTime;
-        busDetails.MorningTrip = busOneTripDetails.MorningTrip;
-        busDetails.Area = busOneTripDetails.Area;
-
-    }
-    else if (selectedBusOption == 2)
-    {
-        busDetails.BusNumber = busTwoTripDetails.BusNumber;
-        busDetails.BusLimit = busTwoTripDetails.BusLimit;
-        busDetails.BusRouteAAddress = busTwoTripDetails.BusRouteAAddress;
-        busDetails.BusRouteAPickupTime = busTwoTripDetails.BusRouteAPickupTime;
-        busDetails.BusRouteBAddress = busTwoTripDetails.BusRouteBAddress;
-        busDetails.BusRouteBPickupTime = busTwoTripDetails.BusRouteBPickupTime;
-        busDetails.MorningTrip = busTwoTripDetails.MorningTrip;
-        busDetails.Area = busTwoTripDetails.Area;
-    }
-    else if (selectedBusOption == 3)
-    {
-        busDetails.BusNumber = busThreeTripDetails.BusNumber;
-        busDetails.BusLimit = busThreeTripDetails.BusLimit;
-        busDetails.BusRouteAAddress = busThreeTripDetails.BusRouteAAddress;
-        busDetails.BusRouteAPickupTime = busThreeTripDetails.BusRouteAPickupTime;
-        busDetails.BusRouteBAddress = busThreeTripDetails.BusRouteBAddress;
-        busDetails.BusRouteBPickupTime = busThreeTripDetails.BusRouteBPickupTime;
-        busDetails.MorningTrip = busThreeTripDetails.MorningTrip;
-        busDetails.Area = busThreeTripDetails.Area;
-    }
-
-    <button type="submit" class="btn-primary"> Add Student to List </button>
-    
-
-    <p> Bus Limit : @busDetails.BusLimit</p>
-    <p> First Stop : @busDetails.BusRouteAAddress</p>
-    <p> Arrival Time : @busDetails.BusRouteAPickupTime</p>
-    <p> Second Stop : @busDetails.BusRouteBAddress</p>
-    <p> Arrival Time : @busDetails.BusRouteBPickupTime</p>
-
-
-    
-</EditForm>
-
-@*code displays if there is space on the bus or not, 
-    consider using this with a yes no option for the waiting list 
-*@
-
-<h1>@messageForBusCapacity</h1>
-
-
-@* Caladner biniding *@
-<div class="container col-10 border border-primary mt-3">
-    <div class="row">
-    <div class="col - 6 ">
-    <CalanderStartDate StartDate="selectedStartDate" StartDateChanged="HandleStartDateChanged" />
-        </div >
-        <div class="col - 6">
-            <!-- Add the CalendarEndDate component here -->
-            <CalanderEndDate EndDate="selectedEndDate" EndDateChanged="HandleEndDateChanged" />
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-6">
+                <CalanderStartDate StartDate="selectedStartDate" StartDateChanged="HandleStartDateChanged" />
+            </div>
+            <div class="col-6">
+                <CalanderEndDate EndDate="selectedEndDate" EndDateChanged="HandleEndDateChanged" />
+                <br />
+            </div>
         </div>
     </div>
+
+    <EditForm Model="busDetails" OnValidSubmit="HandleAddingStudentToBus">
+        <div class="mb-4 text-center">
+            <label for="selectedStudent" class="form-label font-weight-bold mb-2">Which Student would you like to book for</label>
+            <select @bind="@selectedStudentForForm" class="form-select" id="selectedStudent">
+                <option selected disabled>Select A student</option>
+                @foreach (var item in listOfStudents)
+                {
+                    <option value="@item.childUserNameId">@item.Name, @item.Surname</option>
+                }
+            </select>
+        </div>
+
+        <div class="mb-4 text-center">
+            <label for="selectedBusOption" class="form-label font-weight-bold mb-2">Which area would you like to book for</label>
+            <select @bind="selectedBusOption" class="form-select" id="selectedBusOption">
+                <option selected disabled>Select an area</option>
+                <option value="1">Rooihuiskraal/The Reeds</option>
+                <option value="2">Wierdapark/Amberfield</option>
+                <option value="3">Centurion</option>
+            </select>
+        </div>
+
+
+        @if (selectedBusOption == 1)
+        {
+            // set the values of the busDetials object to the values in the object at selected
+            busDetails.BusNumber = busOneTripDetails.BusNumber;
+            busDetails.BusLimit = busOneTripDetails.BusLimit;
+            busDetails.BusRouteAAddress = busOneTripDetails.BusRouteAAddress;
+            busDetails.BusRouteAPickupTime = busOneTripDetails.BusRouteAPickupTime;
+            busDetails.BusRouteBAddress = busOneTripDetails.BusRouteBAddress;
+            busDetails.BusRouteBPickupTime = busOneTripDetails.BusRouteBPickupTime;
+            busDetails.MorningTrip = busOneTripDetails.MorningTrip;
+            busDetails.Area = busOneTripDetails.Area;
+        }
+        else if (selectedBusOption == 2)
+        {
+            busDetails.BusNumber = busTwoTripDetails.BusNumber;
+            busDetails.BusLimit = busTwoTripDetails.BusLimit;
+            busDetails.BusRouteAAddress = busTwoTripDetails.BusRouteAAddress;
+            busDetails.BusRouteAPickupTime = busTwoTripDetails.BusRouteAPickupTime;
+            busDetails.BusRouteBAddress = busTwoTripDetails.BusRouteBAddress;
+            busDetails.BusRouteBPickupTime = busTwoTripDetails.BusRouteBPickupTime;
+            busDetails.MorningTrip = busTwoTripDetails.MorningTrip;
+            busDetails.Area = busTwoTripDetails.Area;
+        }
+        else if (selectedBusOption == 3)
+        {
+            busDetails.BusNumber = busThreeTripDetails.BusNumber;
+            busDetails.BusLimit = busThreeTripDetails.BusLimit;
+            busDetails.BusRouteAAddress = busThreeTripDetails.BusRouteAAddress;
+            busDetails.BusRouteAPickupTime = busThreeTripDetails.BusRouteAPickupTime;
+            busDetails.BusRouteBAddress = busThreeTripDetails.BusRouteBAddress;
+            busDetails.BusRouteBPickupTime = busThreeTripDetails.BusRouteBPickupTime;
+            busDetails.MorningTrip = busThreeTripDetails.MorningTrip;
+            busDetails.Area = busThreeTripDetails.Area;
+        }
+
+        <div class="text-center mb-4">
+            <button type="submit" class="btn btn-primary">Add Student to List</button>
+        </div>
+
+        <div class="mt-3">
+            <p><strong>Bus Limit:</strong> @busDetails.BusLimit</p>
+            <p><strong>First Stop:</strong> @busDetails.BusRouteAAddress</p>
+            <p><strong>Arrival Time:</strong> @busDetails.BusRouteAPickupTime</p>
+            <p><strong>Second Stop:</strong> @busDetails.BusRouteBAddress</p>
+            <p><strong>Arrival Time:</strong> @busDetails.BusRouteBPickupTime</p>
+        </div>
+    </EditForm>
 </div>
 
-<BusRoutAfternoonComponenet ParentID="ParentID" />
 
 @code {
     [Parameter]

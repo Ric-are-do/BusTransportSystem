@@ -3,59 +3,115 @@
 @page "/ParentPage/{UserName}"
 @inject LoginPageService loginPageService
 
-<h1>Welcome @thisUserDetails.firstName</h1>
-<p>
-    Below are the details we have for you
-</p>
 
-<div class="container">
-    <div class="row">
-        <div class="col-lg-12 border border-primary">
-            <h1>Welcome @thisUserDetails.firstName</h1>
-            <p> Below is a summary page regarding your profile. </p>
-           
-            <div class="container ">
-                <div class="row">
-                    <div class="col-lg-4 align-content-center border border-primary">
-                        <div class=" align-content-center">
-                            <h2> @thisUserDetails.firstName @thisUserDetails.lastName Details</h2>
-                            <p>Below are the details we have for you</p>
-                            <ul class="list-group">
-                                <li class="list-group-item">DB ID : @thisUserDetails.Id</li>
-                                <li class="list-group-item">Name : @thisUserDetails.firstName</li>
-                                <li class="list-group-item">Surname : @thisUserDetails.lastName</li>
-                                <li class="list-group-item">Contact Number : @thisUserDetails.phoneNumber</li>
-                                <li class="list-group-item">Email address : @thisUserDetails.emailAddress</li>
-                                <li class="list-group-item"><button class="btn btn-primary">Update</button></li>
-                            </ul>
 
-                        </div>
-                    </div>
-                    <div class="col-lg-8  border border-primary">
-                        <div>
-                            <DisplayListOfStudents ParentID="thisUserDetails.Id" /> 
-                        </div>
-                    </div>
+    <div class="container mt-5">
+        <!-- User Details Section -->
+        <div class="row">
+            <div class="col-lg-12 border p-4 bg-light rounded text-center">
+                <h1 class="display-4">Welcome, @thisUserDetails.firstName!</h1>
+                <p class="lead">Below is a summary page regarding your profile.</p>
+            </div>
+        </div>
+
+        <!-- Add Student and Students Under Parent Sections -->
+        <div class="row mt-4">
+            <!-- User Details Column -->
+            <div class="col-lg-12 mb-4 text-center">
+                <div class="border p-4 rounded">
+                    <h3>@thisUserDetails.firstName @thisUserDetails.lastName Details</h3>
+                    <ul class="list-group">
+                        <li class="list-group-item text-center">DB ID: @thisUserDetails.Id</li>
+                        <li class="list-group-item text-center">Name: @thisUserDetails.firstName</li>
+                        <li class="list-group-item text-center">Surname: @thisUserDetails.lastName</li>
+                        <li class="list-group-item text-center">Contact Number: @thisUserDetails.phoneNumber</li>
+                        <li class="list-group-item text-center">
+                            <button class="btn btn-primary">Update</button>
+                        </li>
+                    </ul>
                 </div>
             </div>
 
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="p-3">
-                            Container 3
-                            <BusRoutCompinenets ParentID="thisUserDetails.Id" />
-                            <AddStudent ParentID="@thisUserDetails.Id" />
+            <!-- Add Student Section (Left, Less Width) -->
+            <div class="col-lg-5">
+                <div class="border p-4 rounded mr-2 mb-4">
+                    <AddStudent ParentID="@thisUserDetails.Id" />
+                </div>
+            </div>
 
-
-                            <h1> New Componenet </h1>
-                            <DisplayStudentOnBus ParentIDForStudentsUnderParent="@thisUserDetails.Id" />
-                        </div>
-                    </div>
+            <!-- Students Under Parent Section (Right) -->
+            <div class="col-lg-7">
+                <div class="border p-4 rounded mb-4">
+                    <DisplayListOfStudents ParentID="@thisUserDetails.Id" />
                 </div>
             </div>
         </div>
+
+<div class="container mt-5">
+    <!-- User Details Section -->
+    <!-- ... (user details section remains the same) ... -->
+
+    <!-- Buttons container with border and light grey background -->
+    <div class="border rounded p-4 bg-light">
+        <!-- Buttons for different actions -->
+        <div class="row mt-4">
+            <div class="col-lg-4 mb-3 text-center">
+                <button class="btn btn-primary btn-lg btn-block" @onclick="ShowMorningTrip">Book Morning Trip</button>
+            </div>
+            <div class="col-lg-4 mb-3 text-center">
+                <button class="btn btn-primary btn-lg btn-block" @onclick="ShowAfternoonTrip">Book Afternoon Trip</button>
+            </div>
+            <div class="col-lg-4 mb-3 text-center">
+                <button class="btn btn-primary btn-lg btn-block" @onclick="ShowStudentBusDetails">Student on Bus Details</button>
+            </div>
+        </div>
     </div>
+
+    <!-- Rest of your content... -->
+</div>
+
+
+
+
+
+
+
+
+    <!-- Display components based on button clicks -->
+    @if (showMorningTrip)
+    {
+        <div class="row mt-4">
+            <div class="col-lg-12">
+                <div class="border p-4 rounded" style="background-color: #f5f5f5;">
+                    <h1 class="text-center font-weight-bold mb-4">Register for Morning Trip</h1>
+                    <BusRoutCompinenets ParentID=@thisUserDetails.Id />
+                </div>
+            </div>
+        </div>
+    }
+    else if (showAfternoonTrip)
+    {
+        <div class="row mt-4">
+            <div class="col-lg-12">
+                <div class="border p-4 rounded" style="background-color: #f5f5f5;">
+                    <h1 class="text-center font-weight-bold mb-4">Register for Afternoon Trip</h1>
+                    <BusRoutAfternoonComponenet ParentID=@thisUserDetails.Id />
+                </div>
+            </div>
+        </div>
+    }
+    else if (showStudentBusDetails)
+    {
+        <div class="row mt-4">
+            <div class="col-lg-12">
+                <div class="border p-4 rounded" style="background-color: #f5f5f5;">
+                    <h1 class="text-center font-weight-bold mb-4">Student on Bus Details</h1>
+                    <!-- Add your SubstituteComponent here -->
+                    <!-- Example: <SubstituteComponent ParentID=@thisUserDetails.Id /> -->
+                </div>
+            </div>
+        </div>
+    }
 </div>
 
 
@@ -65,14 +121,40 @@
     public string UserName { get; set; }
     public ParentDetails thisUserDetails { get; set; }
 
-    //this code will run when the page is loaded.Allowing us to set up data on load
+    // This code will run when the page is loaded. Allowing us to set up data on load
     protected override async Task OnInitializedAsync()
     {
         thisUserDetails = loginPageService.GetParentObjectWithUserName(UserName);
-        // All methods  that should run on load
+        // All methods that should run on load
     }
 
+    // button for register bus transport componenet
+    private bool IsComponentVisible = true;
 
+    private bool showMorningTrip = false;
+    private bool showAfternoonTrip = false;
+    private bool showStudentBusDetails = false;
 
+    private void ShowMorningTrip()
+    {
+        showMorningTrip = true;
+        showAfternoonTrip = false;
+        showStudentBusDetails = false;
+    }
 
+    private void ShowAfternoonTrip()
+    {
+        showMorningTrip = false;
+        showAfternoonTrip = true;
+        showStudentBusDetails = false;
+    }
+
+    private void ShowStudentBusDetails()
+    {
+        showMorningTrip = false;
+        showAfternoonTrip = false;
+        showStudentBusDetails = true;
+    }
+}
+}
 }

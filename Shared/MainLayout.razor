@@ -1,10 +1,23 @@
-﻿@inherits LayoutComponentBase
+﻿@inject NavigationManager NavigationManager
+
+@inherits LayoutComponentBase
 
 <PageTitle>BusServiceApplication</PageTitle>
 
-<div class="page " style="zoom:100%">
+<div class="page" style="zoom:100%">
     <div class="sidebar">
-        <NavMenu />
+        @if (AdminMenu)
+        {
+            <AdminNavMenu />
+        }
+        else if (ParentMenu)
+        {
+            <NavMenu />
+        }
+        else
+        {
+            <!-- No menu is displayed when neither AdminMenu nor ParentMenu is true -->
+        }
     </div>
 
     <main>
@@ -17,3 +30,36 @@
         </article>
     </main>
 </div>
+
+@code {
+    bool AdminMenu = false;
+    bool ParentMenu = false;
+    bool menusSet = false;
+
+    protected override void OnInitialized()
+    {
+        // Set menus only once
+        if (!menusSet)
+        {
+            // Check the current URL to determine which menu to display initially
+            AdminMenu = NavigationManager.Uri.Contains("AdministarotPage", StringComparison.OrdinalIgnoreCase);
+            ParentMenu = NavigationManager.Uri.Contains("ParentPage", StringComparison.OrdinalIgnoreCase);
+
+            // Mark menus as set
+            menusSet = true;
+        }
+
+        // Subscribe to the OnLocationChanged event to handle navigation changes
+        NavigationManager.LocationChanged += OnLocationChanged;
+    }
+
+    private void OnLocationChanged(object sender, LocationChangedEventArgs e)
+    {
+        // Check the new URL to determine which menu to display
+        AdminMenu = NavigationManager.Uri.Contains("AdministarotPage", StringComparison.OrdinalIgnoreCase);
+        ParentMenu = NavigationManager.Uri.Contains("ParentPage", StringComparison.OrdinalIgnoreCase);
+
+        // Call StateHasChanged to re-render the component
+        StateHasChanged();
+    }
+}
