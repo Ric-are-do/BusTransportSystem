@@ -1,6 +1,7 @@
 ﻿using BusServiceApplication.Data.Models;
 using BusServiceApplication.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 public class StudentService
 {
@@ -64,7 +65,7 @@ public class StudentService
     //Get a parent object from a student object 
     //Here we pass in the ID of the child , then get the parent ID , from there we search the loginProfile for the parent ID and return the parent as an object
     //I plan on using this for the emails
-    public ParentDetails getParentObjectUsingchildUserNameID(string childUserNameID)
+    public ParentDetails GetParentObjectUsingchildUserNameID(string childUserNameID)
     {
         using (var context = _dbContextFactory.CreateDbContext())
         {
@@ -76,7 +77,47 @@ public class StudentService
         }
      }
 
-    
+
+    //--------------------------------------------
+    //Parent Delete the student from the database based on the ID 
+    //This delete should look at all the different tables and remove the student anywhere where they may be present 
+    public void ParentDeleteStudentFromAllDatabases(string childUserNameID)
+    {
+        using (var context = _dbContextFactory.CreateDbContext())
+        {
+            var recrodsToDeletefromWaitingList = context.waitingListDetails.Where(x => x.ChildUserNameId == childUserNameID);
+            var recordsToDeleteFromBusDetailsMorning = context.busDetailsMorning.Where(x => x.ChildUserNameId == childUserNameID);
+            var recordsToDeleteFromBusDetailsAfternoon = context.busDetailsAfternoon.Where(x => x.ChildUserNameId== childUserNameID);
+            var recordsToDeleteFromStudent = context.studentDetails.Where(x => x.childUserNameId == childUserNameID);
+
+            //if statements to confirm the checks 
+            if(recrodsToDeletefromWaitingList.Any())
+            {
+                context.waitingListDetails.RemoveRange(recrodsToDeletefromWaitingList);
+            }
+
+            if(recordsToDeleteFromBusDetailsMorning.Any())
+            {
+                context.busDetailsMorning.RemoveRange(recordsToDeleteFromBusDetailsMorning);
+            }
+
+            if(recordsToDeleteFromBusDetailsAfternoon.Any())
+            {
+                context.busDetailsAfternoon.RemoveRange(recordsToDeleteFromBusDetailsAfternoon);
+            }
+
+            if(recordsToDeleteFromStudent.Any())
+            {
+                context.studentDetails.RemoveRange(recordsToDeleteFromStudent);
+            }
+
+            //save the changes 
+            context.SaveChanges();
+        }
+    }
+
+
+
 
 
 }

@@ -1,5 +1,6 @@
 ﻿using BusServiceApplication.Data;
 using BusServiceApplication.Data.Models;
+using BusServiceApplication.HelperMethods;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Diagnostics;
@@ -137,9 +138,9 @@ namespace BusServiceApplication.Services
             {
                 var listOfStudentsOnMorningBus = context.busDetailsMorning.ToList();
 
-                foreach (var student in listOfStudentsOnMorningBus) 
-                { 
-                    if(student.TakingBusStartDate <= weekStartDate)
+                foreach (var student in listOfStudentsOnMorningBus)
+                {
+                    if (student.TakingBusStartDate <= weekStartDate)
                     {
                         selectedStudents.Add(student);
                     }
@@ -161,7 +162,7 @@ namespace BusServiceApplication.Services
 
                 foreach (var student in listOfStudentsOnMorningBus)
                 {
-                    if (student.TakingBusStartDate <= weekStartDate )
+                    if (student.TakingBusStartDate <= weekStartDate)
                     {
                         selectedStudents.Add(student);
                     }
@@ -171,8 +172,94 @@ namespace BusServiceApplication.Services
 
         }
 
+        //-------------------------------------------
+        // Delete a student record on the waiting List using The ID of that record 
+
+        public void DeleteStudentFromWaitinList(int id)
+        {
+            using (var context = _dbContextFactory.CreateDbContext())
+            {
+                var recordToDelete = context.waitingListDetails.SingleOrDefault(x => x.id == id);
+                if (recordToDelete != null) // if we find the record with this ID 
+                {
+                    context.waitingListDetails.Remove(recordToDelete);
+                    context.SaveChanges();
+                }
+                else
+                {
+                    Debug.WriteLine("Record Not Found");
+                }
+            }
+        }
+
+        //Add a student from the waiting list to the bus they needed to be on 
+
+        public void UpdateAndTransferToAfternoonList(WaitingListDetails waitingListDetails)
+        {
+            var afternoonDetails = new BusDetailsAfternoon
+            {
+                ChildUserNameId = waitingListDetails.ChildUserNameId,
+                BusNumber = waitingListDetails.BusNumber,
+                BusLimit = waitingListDetails.BusLimit,
+                MorningTrip = waitingListDetails.MorningTrip,
+                Area = waitingListDetails.Area,
+                BusRouteAAddress = waitingListDetails.BusRouteAAddress,
+                BusRouteAPickupTime = waitingListDetails.BusRouteAPickupTime,
+                BusRouteBAddress = waitingListDetails.BusRouteBAddress,
+                BusRouteBPickupTime = waitingListDetails.BusRouteBPickupTime,
+                DateEntryCreated = DateTime.Now, // Set the current date and time for the new object
+                TimeEntryCreated = DateTime.Now.ToString("HH:mm:ss"), // Set the current time for the new object
+                TakingBusStartDate = waitingListDetails.TakingBusStartDate,
+                TakingBusEndDate = waitingListDetails.TakingBusEndDate
+            };
+
+            // next we add the object to the Afternoon Details list 
+
+            using (var context =  _dbContextFactory.CreateDbContext())
+            {
+                context.busDetailsAfternoon.Add(afternoonDetails);
+                context.SaveChanges();
+            }
+
+            //Delete the student from the waiting List 
+            DeleteStudentFromWaitinList(waitingListDetails.id);
+        }
+
+        //Repeat the code for for the moring list 
+
+        public void UpdateAndTransferToMorningList(WaitingListDetails waitingListDetails)
+        {
+            var afternoonDetails = new BusDetailsMorning
+            {
+                ChildUserNameId = waitingListDetails.ChildUserNameId,
+                BusNumber = waitingListDetails.BusNumber,
+                BusLimit = waitingListDetails.BusLimit,
+                MorningTrip = waitingListDetails.MorningTrip,
+                Area = waitingListDetails.Area,
+                BusRouteAAddress = waitingListDetails.BusRouteAAddress,
+                BusRouteAPickupTime = waitingListDetails.BusRouteAPickupTime,
+                BusRouteBAddress = waitingListDetails.BusRouteBAddress,
+                BusRouteBPickupTime = waitingListDetails.BusRouteBPickupTime,
+                DateEntryCreated = DateTime.Now, // Set the current date and time for the new object
+                TimeEntryCreated = DateTime.Now.ToString("HH:mm:ss"), // Set the current time for the new object
+                TakingBusStartDate = waitingListDetails.TakingBusStartDate,
+                TakingBusEndDate = waitingListDetails.TakingBusEndDate
+            };
+
+            // next we add the object to the Afternoon Details list 
+
+            using (var context = _dbContextFactory.CreateDbContext())
+            {
+                context.busDetailsMorning.Add(afternoonDetails);
+                context.SaveChanges();
+            }
+
+            //Delete the student from the waiting List 
+            DeleteStudentFromWaitinList(waitingListDetails.id);
+        }
+
+        //----------------------------------------------------
 
     }
-
 
 }

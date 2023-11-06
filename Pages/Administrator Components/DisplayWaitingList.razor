@@ -1,5 +1,7 @@
-﻿@inject AdministratorServices administratorServices
+﻿@using BusServiceApplication.HelperMethods;
+@inject AdministratorServices administratorServices
 @inject StudentService studentsServices;
+@inject NavigationManager navigationManager;
 
 
 
@@ -71,8 +73,8 @@
                     <td>@item.DateEntryCreated</td>
                     <td>@item.TimeEntryCreated</td>
                     <td>@item.MorningTrip</td>
-                    <td><button class="btn btn-primary btn-sm" style="width: 80px;">Add</button></td>
-                    <td><button class="btn btn-primary btn-sm" style="width: 80px;">Delete</button></td>
+                    <td><button class="btn btn-primary btn-sm" style="width: 80px;" @onclick="() => addStudentToBus(item)">Add to Bus</button></td>
+                    <td><button class="btn btn-danger btn-sm" @onclick="() => DeleteMemberFromWaitingListTable(item.id)">Delete</button></td>
                 </tr>
                 <!-- Add your if statements here -->
                 @if (item.MorningTrip == true)
@@ -148,8 +150,8 @@
                     <td>@item.DateEntryCreated</td>
                     <td>@item.TimeEntryCreated</td>
                     <td>@item.MorningTrip</td>
-                    <td><button class="btn btn-primary btn-sm" style="width: 80px;">Add</button></td>
-                    <td><button class="btn btn-primary btn-sm" style="width: 80px;">Delete</button></td>
+                    <td><button class="btn btn-primary btn-sm" style="width: 80px;" @onclick="() => addStudentToBus(item)">Add to Bus</button></td>
+                    <td><button class="btn btn-danger btn-sm" @onclick="() => DeleteMemberFromWaitingListTable(item.id)">Delete</button></td>
                 </tr>
                 <!-- Add your if statements here -->
                 @if (item.MorningTrip == true)
@@ -225,8 +227,8 @@
                     <td>@item.DateEntryCreated</td>
                     <td>@item.TimeEntryCreated</td>
                     <td>@item.MorningTrip</td>
-                    <td><button class="btn btn-primary btn-sm" style="width: 80px;">Add</button></td>
-                    <td><button class="btn btn-primary btn-sm" style="width: 80px;">Delete</button></td>
+                    <td><button class="btn btn-primary btn-sm" style="width: 80px;" @onclick="() => addStudentToBus(item)">Add to Bus</button></td>
+                    <td><button class="btn btn-danger btn-sm" @onclick="() => DeleteMemberFromWaitingListTable(item.id)">Delete</button></td>
                 </tr>
                 <!-- Add your if statements here -->
                 @if (item.MorningTrip == true)
@@ -322,7 +324,38 @@
 
     }
 
-    // counter for the total number of students on each bus waiting list 
-    
+    //this handles deleting the record from the waiting list 
+    public void DeleteMemberFromWaitingListTable(int id)
+    {
+        administratorServices.DeleteStudentFromWaitinList(id);
+        Refresh();
+    }
+
+    //refresh Page 
+    public void Refresh()
+    {
+        var refreshPage = new RefreshPage(navigationManager);
+        refreshPage.refreshApplication();
+    }
+
+    //update
+    // I wamt add the item I click on to either the morning bus or the afternoon bus. 
+    //take the record and store it in an object of type morning or afternoonDetails for the bus 
+    //then take that record and add it to the the morning or bus table 
+    private void addStudentToBus(WaitingListDetails student)
+    {
+        if(student.MorningTrip == true)
+        {
+            administratorServices.UpdateAndTransferToMorningList(student);
+            Refresh();
+        }
+        else
+        {
+              administratorServices.UpdateAndTransferToAfternoonList(student);
+             Refresh();
+        }
+
+    }
+
 
 }

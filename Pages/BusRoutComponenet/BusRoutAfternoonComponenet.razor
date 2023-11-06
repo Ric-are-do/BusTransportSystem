@@ -165,7 +165,7 @@
     public void determineIfStudentShouldBeAddedToWaitingList(BusDetailsAfternoon studentWeAreAttemptingToAdd, bool isThereSpaceCheck)
     {
         //sending the correct email
-        var parent = studentServices.getParentObjectUsingchildUserNameID(studentWeAreAttemptingToAdd.ChildUserNameId); // This is how I get the Parent Details for the email
+        var parent = studentServices.GetParentObjectUsingchildUserNameID(studentWeAreAttemptingToAdd.ChildUserNameId); // This is how I get the Parent Details for the email
         var child = studentServices.GetStudentObjectByChildUserNameID(studentWeAreAttemptingToAdd.ChildUserNameId); // this is how we get the child object
         EmailSender emailSender = new EmailSender();
 
