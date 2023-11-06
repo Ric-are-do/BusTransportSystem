@@ -22,7 +22,7 @@
     <InputText id="EmailAddress" @bind-Value="ExistingUser.emailAddress" class="form-control"></InputText>
     <ValidationMessage For="( ()=> ExistingUser.emailAddress ) "/>@*Validation message on blank or Invalid*@
     <lable class="form-label">Password</lable>
-    <InputText id="Password" @bind-Value="ExistingUser.password" class="form-control"></InputText>
+    <InputText id="Password" @bind-Value="ExistingUser.password" class="form-control" type="password"></InputText>
     <ValidationMessage For=" ( ()=> ExistingUser.password)" /> @*Validation message on blank or Invalid*@
 
 

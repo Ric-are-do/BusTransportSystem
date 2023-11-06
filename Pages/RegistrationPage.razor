@@ -30,7 +30,7 @@
     <InputText id="phoneNumber" @bind-Value=User.phoneNumber class="form-control"></InputText>
     <ValidationMessage For=" ()=>  User.phoneNumber" />
     <label class="form-label"> Password </label>
-    <InputText id="password" @bind-Value="User.password" class="form-control"> </InputText>
+    <InputText id="password" @bind-Value="User.password" class="form-control" type="password"> </InputText>
     <ValidationMessage For=" ()=>  User.password" />
     <button type="submit" class="form-control  mt-2 btn-primary"> Register </button>
 </EditForm>

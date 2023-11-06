@@ -27,7 +27,7 @@
                 <div class="mb-3">
                     <label class="form-label">Student Grade</label>
                     <select @bind="student.Grade" class="form-select">
-                        <option disabled>Select Grade</option>
+                        <option enabled>Select Grade</option>
                         @foreach (var item in grades)
                         {
                             <option value="@item.Grade">@item.Grade</option>

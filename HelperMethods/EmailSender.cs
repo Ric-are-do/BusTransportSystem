@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+﻿using BusServiceApplication.Data.Models;
+using System.Data.SqlTypes;
+using System.Diagnostics;
 using System.Net.Mail;
 
 
@@ -86,7 +88,7 @@ namespace BusServiceApplication.HelperMethods
                     mail.Body = EmailMessages.ChildAddedToWaitingList(parentName, childName, busDetails);
                     mail.IsBodyHtml = true;
 
-                    using (SmtpClient smtp = new SmtpClient("mtp.office365.com", 587))
+                    using (SmtpClient smtp = new SmtpClient("smtp.office365.com", 587))
                     {
                         smtp.Credentials = new System.Net.NetworkCredential(
                             "ImpumeleloBusServiceBookingSystem@outlook.com", "Password123!@#");
@@ -104,6 +106,73 @@ namespace BusServiceApplication.HelperMethods
                 throw;
             }
         }
+
+
+        public async Task<string> MoveFromWaingListToMorningBus(string parentName, string parentEmailAddress, string studentName, string area)
+        {
+            try
+            {
+                var message = string.Empty;
+                using (MailMessage mail = new MailMessage())
+                {
+                    mail.From = new MailAddress("ImpumeleloBusServiceBookingSystem@outlook.com"); // get the values from appSettings 
+                    mail.To.Add($"{parentEmailAddress}"); // email to the parent value passed in 
+                    mail.Subject = "Moved From waiting list to Bus";
+                    mail.Body = EmailMessages.ChildMovedFromWaitingListMorning(parentName, studentName, area);
+                    mail.IsBodyHtml = true;
+
+                    using (SmtpClient smtp = new SmtpClient("smtp.office365.com", 587))
+                    {
+                        smtp.Credentials = new System.Net.NetworkCredential(
+                            "ImpumeleloBusServiceBookingSystem@outlook.com", "Password123!@#");
+                        smtp.EnableSsl = true;
+                        smtp.Send(mail);
+                        message = "mail Sent ";
+                        smtp.Dispose();
+                    }
+                    return message;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error : {ex}");
+                throw;
+            }
+        }
+
+        public async Task<string> MoveFromWaingListToAfternoonBus(string parentName, string parentEmailAddress,string studentName, string area)
+        {
+            try
+            {
+                var message = string.Empty;
+                using (MailMessage mail = new MailMessage())
+                {
+                    mail.From = new MailAddress("ImpumeleloBusServiceBookingSystem@outlook.com"); // get the values from appSettings 
+                    mail.To.Add($"{parentEmailAddress}"); // email to the parent value passed in 
+                    mail.Subject = "Moved From waiting list to Bus";
+                    mail.Body = EmailMessages.ChildMovedFromWaitingListAfternoon(parentName, studentName, area);
+                    mail.IsBodyHtml = true;
+
+                    using (SmtpClient smtp = new SmtpClient("smtp.office365.com", 587))
+                    {
+                        smtp.Credentials = new System.Net.NetworkCredential(
+                            "ImpumeleloBusServiceBookingSystem@outlook.com", "Password123!@#");
+                        smtp.EnableSsl = true;
+                        smtp.Send(mail);
+                        message = "mail Sent ";
+                        smtp.Dispose();
+                    }
+                    return message;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error : {ex}");
+                throw;
+            }
+        }
+
+
 
     }
 }

@@ -46,11 +46,28 @@ namespace BusServiceApplication.HelperMethods
             return message;
         }
 
-        public static string ChildMovedFromWaitingListMorning(string parentName, StudentDetails student )
+        public static string ChildMovedFromWaitingListMorning(string parentName, string studentName, string area)
         {
-            string message = 
+            string message =
+          $"<h1> Greetings {parentName} </h1> \n " +
+              $"<p> We are happy To inform you that {studentName} has been moved off the waiting list </p> \n" +
+              $"<p> {studentName} has been added to {area} in the mornings   </p> " +
+              $"<p>should you have any querries , please contact us on 0812440694> </p> \n" +
+              $"<p>Kind Regards </p> \n" +
+              $"<p>the Bus Service Team </p>";
+
+            return message;
+
+
+
+        }
+
+        public static string ChildMovedFromWaitingListAfternoon(string parentName, string studentName, string area)
+        {
+            string message =
             $"<h1> Greetings {parentName} </h1> \n " +
-                $"<p> We are happy To inform you that {student.Name} has been moved off the waiting list </p> \n" +
+                $"<p> We are happy To inform you that {studentName} has been moved off the waiting list </p> \n" +
+                $"<p> {studentName} has been added to {area} in the afternoons   </p> " +
                 $"<p>should you have any querries , please contact us on 0812440694> </p> \n" +
                 $"<p>Kind Regards </p> \n" +
                 $"<p>the Bus Service Team </p>";

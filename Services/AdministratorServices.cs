@@ -84,6 +84,16 @@ namespace BusServiceApplication.Services
             }
         }
 
+        // create a list of students on the Afternoon trup
+        public List<BusDetailsAfternoon> GetStudentsOnAfternoonBus()
+        {
+            using (var context = _dbContextFactory.CreateDbContext())
+            {
+                var ListOfStudentsOnAfternonBus = context.busDetailsAfternoon.ToList();
+                return ListOfStudentsOnAfternonBus;
+            }
+        }
+
         //-----------------------------------------------------------------
         //Methods For MIS reports 
 
@@ -158,9 +168,9 @@ namespace BusServiceApplication.Services
             //below is our DbContext
             using (var context = _dbContextFactory.CreateDbContext())
             {
-                var listOfStudentsOnMorningBus = context.busDetailsAfternoon.ToList();
+                var listOfStudentsOnAfternoongBus = context.busDetailsAfternoon.ToList();
 
-                foreach (var student in listOfStudentsOnMorningBus)
+                foreach (var student in listOfStudentsOnAfternoongBus)
                 {
                     if (student.TakingBusStartDate <= weekStartDate)
                     {

@@ -18,7 +18,7 @@
     <InputText id="EmailAddress" @bind-Value="ExistingUser.emailAddress" class="form-control"></InputText>
     <ValidationMessage For=" ()=> ExistingUser.emailAddress"></ValidationMessage> @*Validation for blank or invalid input*@
     <lable class="form-label">Password</lable>
-    <InputText id="Password" @bind-Value="ExistingUser.password" class="form-control"></InputText>
+    <InputText id="Password" @bind-Value="ExistingUser.password" class="form-control" type="password"></InputText>
     <ValidationMessage For=" ()=> ExistingUser.password"></ValidationMessage> @*Validation for blank or invalid input*@
     <button type="submit" class="form-control mt-2 btn-primary">Login</button>
 

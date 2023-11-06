@@ -10,7 +10,7 @@ namespace BusServiceApplication.Pages.BusRoutComponenet
     {
  
         public static int BusNumber { get; } = 1;
-        public static int BusLimit { get; } = 1;
+        public static int BusLimit { get; } = 35;
         public static string BusRouteAAddress { get; } = "Corner of Panorama and Marabou Road";
         public static string BusRouteAPickupTime { get; } = "14:30";
         public static string BusRouteBAddress { get; } = "Corner of Kolgansstraat and Skimmerstraat";
@@ -24,7 +24,7 @@ namespace BusServiceApplication.Pages.BusRoutComponenet
     public static class BusTwoAfternoonTripDetails
     {
         public static int BusNumber { get; } = 2;
-        public static int BusLimit { get; } = 10;
+        public static int BusLimit { get; } = 15;
         public static string BusRouteAAddress { get; } = "Corner of Reddersburg Street and Mafeking Drive";
         public static string BusRouteAPickupTime { get; } = "14:25";
         public static string BusRouteBAddress { get; } = "Corner of Theuns van Niekerkstraat and Roosmarynstraat";
@@ -36,7 +36,7 @@ namespace BusServiceApplication.Pages.BusRoutComponenet
     public static class BusThreeAfternoonTripDetails
     {
         public static int BusNumber { get; } = 3;
-        public static int BusLimit { get; } = 10;
+        public static int BusLimit { get; } = 15;
         public static string BusRouteAAddress { get; } = "Corner of Jasper Drive and Tieroog Street";
         public static string BusRouteAPickupTime { get; } = "14:30";
         public static string BusRouteBAddress { get; } = "Corner of Louise Street and Von Willich Drive";
@@ -51,7 +51,7 @@ namespace BusServiceApplication.Pages.BusRoutComponenet
     public static class BusOneMorningTripDetails
     {
         public static int BusNumber { get; } = 1;
-        public static int BusLimit { get; } = 1;
+        public static int BusLimit { get; } = 35;
         public static string BusRouteAAddress { get; } = "Corner of Panorama and Marabou Road";
         public static string BusRouteAPickupTime { get; } = "6:22";
         public static string BusRouteBAddress { get; } = "Corner of Kolgansstraat and Skimmerstraat";
@@ -64,7 +64,7 @@ namespace BusServiceApplication.Pages.BusRoutComponenet
     public static class BusTwoMorningTripDetails 
     {
         public static int BusNumber { get; } = 2;
-        public static int BusLimit { get; } = 10;
+        public static int BusLimit { get; } = 15;
         public static string BusRouteAAddress { get; } = "Corner of Reddersburg Street and Mafeking Drive";
         public static string BusRouteAPickupTime { get; } = "6:25";
         public static string BusRouteBAddress { get; } = "Corner of Theuns van Niekerkstraat and Roosmarynstraat";
@@ -75,8 +75,8 @@ namespace BusServiceApplication.Pages.BusRoutComponenet
 
     public static class BusThreeMorningTripDetails
     {
-        public static int BusNumber { get; } = 2;
-        public static int BusLimit { get; } = 10;
+        public static int BusNumber { get; } = 3;
+        public static int BusLimit { get; } = 15;
         public static string BusRouteAAddress { get; } = "Corner of Jasper Drive and Tieroog Street";
         public static string BusRouteAPickupTime { get; } = "6:20";
         public static string BusRouteBAddress { get; } = "Corner of Louise Street and Von Willich Drive";

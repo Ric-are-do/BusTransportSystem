@@ -1,4 +1,5 @@
 ﻿@using BusServiceApplication.HelperMethods;
+@using BusServiceApplication.Pages.BusRoutComponenet;
 @inject AdministratorServices administratorServices
 @inject StudentService studentsServices;
 @inject NavigationManager navigationManager;
@@ -11,13 +12,14 @@
             <h2 class="mb-4">Summary</h2>
             <h3>Display Waiting List</h3>
             <p>Below are the students who are currently on the waiting list, categorized by bus number.</p>
+            <p>The blocks below give a short summary on all 3 busses divided by morning category and afternoon category </P>
             <p>Number of students on Waiting List: @numberOfStudentsOnWaitingList</p>
         </div>
     </div>
     <div class="row">
         <div class="col-md-6">
             <div class="bg-light p-4 mb-4 border border-dark">
-                <h4>Morning Buses</h4>
+                <h4>Morning Buses Waiting List</h4>
                 <p>Number of students on Morning Bus One: @numberOfStudentsOnWaitingListForMorningBus1</p>
                 <p>Number of students on Morning Bus Two: @numberOfStudentsOnWaitingListForMorningBus2</p>
                 <p>Number of students on Morning Bus Three: @numberOfStudentsOnWaitingListForMorningBus3</p>
@@ -25,10 +27,26 @@
         </div>
         <div class="col-md-6">
             <div class="bg-light p-4 mb-4 border border-dark">
-                <h4>Afternoon Buses</h4>
-                <p>Number of students on Afternoon Bus One: @numberOfStudentsOnWaitingListForAfternoonBus1</p>
-                <p>Number of students on Afternoon Bus Two: @numberOfStudentsOnWaitingListForAfternoonBus2</p>
-                <p>Number of students on Afternoon Bus Three: @numberOfStudentsOnWaitingListForAfternoonBus3</p>
+                <h4>Afternoon Buses Waiting List</h4>
+                <p>Number of students on Afternoon Bus One: @numberOfStudentsOnWaitingListForAfternoonBus1  </p>
+                <p>Number of students on Afternoon Bus Two: @numberOfStudentsOnWaitingListForAfternoonBus2  </p>
+                <p>Number of students on Afternoon Bus Three: @numberOfStudentsOnWaitingListForAfternoonBus3  </p>
+            </div>
+        </div>
+         <div class="col-md-6">
+            <div class="bg-light p-4 mb-4 border border-dark">
+                <h4>Morning Buses Current capacity </h4>
+                <p>Number of students on Morning Bus One: @numberOfStudentsOnMorningBus1 / @BusOneMorningTripDetails.BusLimit </p>
+                <p>Number of students on Morning Bus Two: @numberOfStudentsOnMorningBus2 / @BusTwoMorningTripDetails.BusLimit</p>
+                <p>Number of students on Morning Bus Three: @numberOfStudentsOnMorningBus3/ @BusThreeMorningTripDetails.BusLimit</p>
+            </div>
+        </div>
+          <div class="col-md-6">
+            <div class="bg-light p-4 mb-4 border border-dark">
+                <h4>Afternoon Buses current capacity </h4>
+                <p>Number of students on Afternoon Bus One: @numberOfStudentsOnAfternoonBus1 /@BusOneAfternoonTripDetails.BusLimit</p>
+                <p>Number of students on Afternoon Bus Two: @numberOfStudentsOnAfternoonBus2 / @BusTwoAfternoonTripDetails.BusLimit</p>
+                <p>Number of students on Afternoon Bus Three: @numberOfStudentsOnAfternoonBus3 / @BusThreeAfternoonTripDetails.BusLimit</p>
             </div>
         </div>
     </div>
@@ -268,7 +286,7 @@
 
 
 @code {
-    // Boolean flag to track whether summary variables have been calculated
+        // Boolean flag to track whether summary variables have been calculated
     private bool summaryCalculated = false;
 
     public List<WaitingListDetails> studentsOnWaitingList = new List<WaitingListDetails>();
@@ -283,6 +301,23 @@
     int numberOfStudentsOnWaitingListForAfternoonBus1 =0 ;
     int numberOfStudentsOnWaitingListForAfternoonBus2 = 0;
     int numberOfStudentsOnWaitingListForAfternoonBus3 = 0;
+
+    int numberOfStudentsOnAfternoonBus1 = 0;
+    int numberOfStudentsOnAfternoonBus2 = 0;
+    int numberOfStudentsOnAfternoonBus3 = 0;
+    int numberOfStudentsOnMorningBus1 = 0;
+    int numberOfStudentsOnMorningBus2 = 0;
+    int numberOfStudentsOnMorningBus3 = 0;
+
+
+
+    //getting the current bus information 
+    public List<BusDetailsMorning> busDetailsMornings = new List<BusDetailsMorning>();
+    public List<BusDetailsAfternoon> busDetailsAfternoons = new List<BusDetailsAfternoon>();
+
+    // fill the lists above with their contents
+
+
 
 
     protected override async Task OnInitializedAsync()
@@ -310,6 +345,20 @@
 
             // Calculate summary variables for Afternoon Bus 3
             numberOfStudentsOnWaitingListForAfternoonBus3 = studentsOnWaitingList.Count(item => !item.MorningTrip && item.BusNumber == 3);
+
+
+
+            var morningList = administratorServices.GetStudentsOnMorningBus();
+            var afternoonList = administratorServices.GetStudentsOnAfternoonBus();
+
+
+
+            numberOfStudentsOnMorningBus1 = morningList.Count(item => item.MorningTrip && item.BusNumber == 1);
+            numberOfStudentsOnMorningBus2 = morningList.Count(item => item.MorningTrip && item.BusNumber == 2);
+            numberOfStudentsOnMorningBus3 = morningList.Count(item => item.MorningTrip && item.BusNumber == 3);
+            numberOfStudentsOnAfternoonBus1 = afternoonList.Count(item => !item.MorningTrip && item.BusNumber == 1);
+            numberOfStudentsOnAfternoonBus2 = afternoonList.Count(item => !item.MorningTrip && item.BusNumber == 2);
+            numberOfStudentsOnAfternoonBus3 = afternoonList.Count(item => !item.MorningTrip && item.BusNumber == 3);
 
             // Call StateHasChanged to re-render the component after updating the variables
             StateHasChanged();
@@ -344,18 +393,31 @@
     //then take that record and add it to the the morning or bus table 
     private void addStudentToBus(WaitingListDetails student)
     {
-        if(student.MorningTrip == true)
+        //Create an eamil for the parent , first create the email object 
+        EmailSender emailSender = new EmailSender();
+
+        //get parent for student 
+        var parent = studentsServices.GetParentObjectUsingchildUserNameID(student.ChildUserNameId);
+        var thisStudent = studentsServices.GetStudentObjectByChildUserNameID(student.ChildUserNameId);
+
+
+
+
+        if (student.MorningTrip == true)
         {
             administratorServices.UpdateAndTransferToMorningList(student);
             Refresh();
+            // Send email
+            emailSender.MoveFromWaingListToMorningBus(parent.firstName, parent.emailAddress, thisStudent.Name, student.Area);
+
         }
         else
         {
-              administratorServices.UpdateAndTransferToAfternoonList(student);
-             Refresh();
+            administratorServices.UpdateAndTransferToAfternoonList(student);
+            Refresh();
+            emailSender.MoveFromWaingListToAfternoonBus(parent.firstName, parent.emailAddress, thisStudent.Name, student.Area);
         }
-
     }
+ }
+ 
 
-
-}

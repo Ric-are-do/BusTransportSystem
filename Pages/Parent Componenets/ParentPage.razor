@@ -7,12 +7,13 @@
 
     <div class="container mt-5">
         <!-- User Details Section -->
-        <div class="row">
-            <div class="col-lg-12 border p-4 bg-light rounded text-center">
-                <h1 class="display-4">Welcome, @thisUserDetails.firstName!</h1>
-                <p class="lead">Below is a summary page regarding your profile.</p>
-            </div>
+    <div class="row">
+        <div class="col-lg-12 border p-4 rounded text-center" style="background-color: #A4C1EC;">
+            <h1 class="display-4">Welcome, @thisUserDetails.firstName!</h1>
+            <p class="lead">Below is a summary page regarding your profile.</p>
         </div>
+    </div>
+
 
         <!-- Add Student and Students Under Parent Sections -->
         <div class="row mt-4">
@@ -25,9 +26,6 @@
                         <li class="list-group-item text-center">Name: @thisUserDetails.firstName</li>
                         <li class="list-group-item text-center">Surname: @thisUserDetails.lastName</li>
                         <li class="list-group-item text-center">Contact Number: @thisUserDetails.phoneNumber</li>
-                        <li class="list-group-item text-center">
-                            <button class="btn btn-primary">Update</button>
-                        </li>
                     </ul>
                 </div>
             </div>
@@ -69,14 +67,6 @@
 
     <!-- Rest of your content... -->
 </div>
-
-
-
-
-
-
-
-
     <!-- Display components based on button clicks -->
     @if (showMorningTrip)
     {
@@ -113,7 +103,6 @@
         </div>
     }
 </div>
-
 
 
 @code {
@@ -155,6 +144,4 @@
         showAfternoonTrip = false;
         showStudentBusDetails = true;
     }
-}
-}
 }

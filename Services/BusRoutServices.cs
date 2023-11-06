@@ -2,6 +2,7 @@
 using BusServiceApplication.Data.Models;
 using BusServiceApplication.Pages.StudentComponents;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 namespace BusServiceApplication.Services
 {
@@ -107,6 +108,45 @@ namespace BusServiceApplication.Services
             }
         }
 
+        //-----------------------------------
+        //Delete a student from a specific bus rout 
+
+  
+        public void DeleteStudentFromBusRoutMorning(string childUsername, int busNumber  )
+        {
+            using (var context = _dbContextFactory.CreateDbContext())
+            {
+                var recordToDeleteChildID = context.busDetailsMorning.Where(x => x.ChildUserNameId == childUsername);
+                var recordToDeleteBusNumber = context.busDetailsMorning.Where(x => x.BusNumber == busNumber);
+                if (recordToDeleteChildID != null && recordToDeleteBusNumber != null) // if we find the record with this ID 
+                {
+                    context.busDetailsMorning.Remove((BusDetailsMorning)recordToDeleteChildID);
+                    context.SaveChanges();
+                }
+                else
+                {
+                    Debug.WriteLine("Record Not Found");
+                }
+            }
+        }
+
+        public void DeleteStudentFromBusRoutAfternoon(string childUsername, int busNumber)
+        {
+            using (var context = _dbContextFactory.CreateDbContext())
+            {
+                var recordToDeleteChildID = context.busDetailsAfternoon.Where(x => x.ChildUserNameId == childUsername);
+                var recordToDeleteBusNumber = context.busDetailsAfternoon.Where(x => x.BusNumber == busNumber);
+                if (recordToDeleteChildID != null && recordToDeleteBusNumber != null) // if we find the record with this ID 
+                {
+                    context.busDetailsAfternoon.Remove((BusDetailsAfternoon)recordToDeleteChildID);
+                    context.SaveChanges();
+                }
+                else
+                {
+                    Debug.WriteLine("Record Not Found");
+                }
+            }
+        }
 
 
     }
