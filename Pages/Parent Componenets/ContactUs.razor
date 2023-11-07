@@ -1,0 +1,52 @@
+﻿@using BusServiceApplication.Pages.StudentComponents;
+@using BusServiceApplication.Pages.BusRoutComponenet;
+@page "/ContactUs"
+@inject LoginPageService loginPageService
+
+
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <table class="table table-bordered text-center">
+                <tr>
+                    <th>Contact Person</th>
+                    <td>@ContactPerson</td>
+                </tr>
+                <tr>
+                    <th>Position</th>
+                    <td>@Position</td>
+                </tr>
+                <tr>
+                    <th>Email Address</th>
+                    <td>@EmailAddress</td>
+                </tr>
+                <tr>
+                    <th>Phone Number</th>
+                    <td>@PhoneNumber</td>
+                </tr>
+                <tr>
+                    <th>Open Dates</th>
+                    <td>@OpenDays</td>
+                </tr>
+                <tr>
+                    <th>Contact Hours</th>
+                    <td>@ContactHours</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+@code {
+
+    private string ContactPerson = "D Nkosi";
+    private string Position = "School Administrator";
+    private string EmailAddress = "dnkosi@impumelolo.high.school.co.za";
+    private string PhoneNumber = "0812440694";
+    private string OpenDays = "Mon - Fri";
+    private string ContactHours = "08:00 - 17:00";
+
+    
+}

@@ -1,0 +1,87 @@
+﻿@page "/AdministarotPage/RegisterAParent"
+@using BusServiceApplication.Data.Models
+@using System.Diagnostics;
+@using BusServiceApplication.Services;
+@using BusServiceApplication.HelperMethods;
+@using BusServiceApplication.Pages;
+@inject LoginPageService loginPageService
+@inject NavigationManager navigationManager
+
+
+
+<div class="container bg-light p-4">
+    <EditForm Model="@User" OnValidSubmit="HandleRegistration" class="col-md-6 mx-auto">
+
+
+        <div class="container mt-4" style="background-color: #A4C1EC;">
+            <h1 class="mb-4">Register a Parent</h1>
+            <h5> Please note that the password set for the parent needs to be sent to the parent manually by the administrator </h5>
+            <h5>--Note the Following --</h5>
+            <h5> To add children under this parent , please use normal login functionality as a parent would  </h5>
+
+        </div>
+        <div class="form-group">
+            <label for="firstName" class="form-label">First Name</label>
+            <InputText id="firstName" @bind-Value="User.firstName" class="form-control" placeholder="Enter your First Name"></InputText>
+        </div>
+        <div class="form-group">
+            <label for="lastName" class="form-label">Last Name</label>
+            <InputText id="lastName" @bind-Value="User.lastName" class="form-control" placeholder="Enter your Last Name"></InputText>
+        </div>
+        <div class="form-group">
+            <label for="emailAddress" class="form-label">Email Address</label>
+            <InputText id="emailAddress" @bind-Value="User.emailAddress" class="form-control" placeholder="Enter your Email Address"></InputText>
+        </div>
+        <div class="form-group">
+            <label for="phoneNumber" class="form-label">Phone Number</label>
+            <InputText id="phoneNumber" @bind-Value="User.phoneNumber" class="form-control" placeholder="Enter your Phone Number"></InputText>
+        </div>
+        <div class="form-group">
+            <label for="password" class="form-label">Password</label>
+            <InputText id="password" @bind-Value="User.password" class="form-control" type="password" placeholder="Enter your Password"></InputText>
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Register</button>
+    </EditForm>
+
+    @if (!hiddenMessage)
+    {
+        <h5 class="mt-4 text-center">@successfulRegistration</h5>
+    }
+
+
+</div>
+
+
+@code {
+
+    ParentDetails User = new ParentDetails();
+    EmailSender emailSenderObject = new EmailSender();
+    string successfulRegistration = "The parent has successfully been registered and an email has been sent.";
+    bool hiddenMessage = true;
+
+
+    public void HandleRegistration(EditContext editContext)
+    {
+        var newUser = (ParentDetails)editContext.Model;
+        newUser.username = newUser.firstName + newUser.phoneNumber;
+        newUser.CreateedDate = DateTime.Now;
+        loginPageService.CheckThatCredenetailsAreUnique(newUser.username, newUser.emailAddress);
+        loginPageService.RegisterANewUser(newUser);
+        Debug.WriteLine($"Submit {User.emailAddress}, {User.password} ");
+        var GetTheNewPersonObject = loginPageService.GetParentObject(newUser.emailAddress, newUser.password);
+
+        //Email Object
+        var message = emailSenderObject.RegisterationEmail(newUser.firstName, newUser.emailAddress);
+
+        //Display that the parent has been registered
+        // reset fields
+        hiddenMessage = false;
+        newUser.firstName = string.Empty;
+        newUser.lastName = string.Empty;
+        newUser.emailAddress = string.Empty;
+        newUser.phoneNumber = string.Empty;
+        newUser.password = string.Empty;
+    }
+
+
+}

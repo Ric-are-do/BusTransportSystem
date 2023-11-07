@@ -185,3 +185,4 @@ C:\Users\ricard03\Desktop\All Documents\Study material\study Unisa\Diploma Proje
 C:\Users\ricard03\Desktop\All Documents\Study material\study Unisa\Diploma Project\Bus_Project\BusServiceApplicationRepo\BusTransportSystem\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.Pkcs.dll
 C:\Users\ricard03\Desktop\All Documents\Study material\study Unisa\Diploma Project\Bus_Project\BusServiceApplicationRepo\BusTransportSystem\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Text.Encoding.CodePages.dll
 C:\Users\ricard03\Desktop\All Documents\Study material\study Unisa\Diploma Project\Bus_Project\BusServiceApplicationRepo\BusTransportSystem\obj\Debug\net6.0\scopedcss\Shared\AdminNavMenu.razor.rz.scp.css
+C:\Users\ricard03\Desktop\All Documents\Study material\study Unisa\Diploma Project\Bus_Project\BusServiceApplicationRepo\BusTransportSystem\obj\Debug\net6.0\scopedcss\Shared\DefaultNav.razor.rz.scp.css

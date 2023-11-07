@@ -12,7 +12,7 @@ namespace BusServiceApplication.HelperMethods
             $"<h1> Greetings {parentName} </h1> \n " +
             $"<p> Thank you for registering for the Impumelelo Bus Service Booking System \n </p>" +
             $"<p>We have your email address as {parentEmailAddress} </p> \n" +
-            $"<p> Please feel free to contact us on 0812440694 if you experience any issues </p> \n " +
+            $"<p> Please feel free to contact us on 0812440694 or email us on dnkosi@impumelolo.high.school.co.za, if you experience any issues </p> \n " +
             $"<p>Kind Regards </p> \n" +
             $"<p> The Bus Service team </p> ";
             
@@ -26,7 +26,7 @@ namespace BusServiceApplication.HelperMethods
                 $"<h1> Greetings {parentName} </h1> \n " +
                 $"<p> We are happy to inform you that you have successfully booked a place for {childName} on the </p> " +
                 $"<p>{busdetails} bus route during {bustTime} </p> \n" +
-                $"<p>Should you have any querries, please contact us on 081244094  </p> \n " +
+                $"<p>Should you have any querries, please contact us on 081244094 or email us on dnkosi@impumelolo.high.school.co.za </p> \n " +
                 $"<p>kind regards \n " +
                 $"<p>The Bus Service Team </p>";
 
@@ -39,7 +39,7 @@ namespace BusServiceApplication.HelperMethods
             $"<h1> Greetings {parentName} </h1> \n " +
                 $"<p> Based on the bus rout selected, all seats on the current route : {busdetails} are currently booked  </p> \n" +
                 $"<p> We have added {childname} to the waiting list and will inform you if a space opens  </p> \n" +
-                $"<p>Should you have any querries, please contact us on 081244094  </p> " +
+                $"<p>Should you have any querries, please contact us on 081244094 or email us on dnkosi@impumelolo.high.school.co.za </p> " +
                 $"<p>kind Regards  </p> \n" +
                 $"<p>The Bus Service team </p>";
 
@@ -52,7 +52,7 @@ namespace BusServiceApplication.HelperMethods
           $"<h1> Greetings {parentName} </h1> \n " +
               $"<p> We are happy To inform you that {studentName} has been moved off the waiting list </p> \n" +
               $"<p> {studentName} has been added to {area} in the mornings   </p> " +
-              $"<p>should you have any querries , please contact us on 0812440694> </p> \n" +
+              $"<p>should you have any querries , please contact us on 0812440694 or email us on dnkosi@impumelolo.high.school.co.za> </p> \n" +
               $"<p>Kind Regards </p> \n" +
               $"<p>the Bus Service Team </p>";
 
@@ -68,7 +68,7 @@ namespace BusServiceApplication.HelperMethods
             $"<h1> Greetings {parentName} </h1> \n " +
                 $"<p> We are happy To inform you that {studentName} has been moved off the waiting list </p> \n" +
                 $"<p> {studentName} has been added to {area} in the afternoons   </p> " +
-                $"<p>should you have any querries , please contact us on 0812440694> </p> \n" +
+                $"<p>should you have any querries , please contact us on 0812440694 or email us on dnkosi@impumelolo.high.school.co.za> </p> \n" +
                 $"<p>Kind Regards </p> \n" +
                 $"<p>the Bus Service Team </p>";
 
