@@ -5,21 +5,23 @@
 @inject AdministratorServices administratorLoginServices;
 @page "/AdministarotPage/{Id}"
 
-<PageTitle>Administrator Landing Page</PageTitle>
+
 
 <div class="container text-center mt-5">
-    <h3>Administrator Page</h3>
+    
+
+      <div class="container mt-4" style="background-color: #A4C1EC;">
+        <PageTitle>Administrator Landing Page</PageTitle>
+        <h3>Administrator Page</h3>
+        <h1 class="mb-4">Show the Entire Waiting List</h1>
+    </div>
    
 
-    <h1 class="mb-4">Show the Entire Waiting List</h1>
+    
     <div class="mb-4 text-center">
         <DisplayWaitingList />
     </div>
 
-    <h1 class="mb-4">Students on Bus List</h1>
-    <div class="mb-4 text-center">
-        <DisplayStudentsOnBusList />
-    </div>
 
 </div>
 

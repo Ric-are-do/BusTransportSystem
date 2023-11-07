@@ -49,13 +49,13 @@ namespace BusServiceApplication.Services
 
 
         //Service to add student to the waiting list 
-        public void  addStudentToWaitingList(WaitingListDetails studentUsingBusMovedToWaitingList)
+        public void addStudentToWaitingList(WaitingListDetails studentUsingBusMovedToWaitingList)
         {
             using (var context = _dbContextFactory.CreateDbContext())
             {
                 context.waitingListDetails.Add(studentUsingBusMovedToWaitingList);
-                context.SaveChanges() ;
-                
+                context.SaveChanges();
+
             }
         }
 
@@ -111,21 +111,24 @@ namespace BusServiceApplication.Services
         //-----------------------------------
         //Delete a student from a specific bus rout 
 
-  
-        public void DeleteStudentFromBusRoutMorning(string childUsername, int busNumber  )
+
+        public void DeleteStudentFromBusRoutMorning(string childUsername, int busNumber)
         {
             using (var context = _dbContextFactory.CreateDbContext())
             {
-                var recordToDeleteChildID = context.busDetailsMorning.Where(x => x.ChildUserNameId == childUsername);
-                var recordToDeleteBusNumber = context.busDetailsMorning.Where(x => x.BusNumber == busNumber);
-                if (recordToDeleteChildID != null && recordToDeleteBusNumber != null) // if we find the record with this ID 
                 {
-                    context.busDetailsMorning.Remove((BusDetailsMorning)recordToDeleteChildID);
-                    context.SaveChanges();
-                }
-                else
-                {
-                    Debug.WriteLine("Record Not Found");
+                    var recordToDelete = context.busDetailsMorning
+                                            .FirstOrDefault(x => x.ChildUserNameId == childUsername && x.BusNumber == busNumber);
+
+                    if (recordToDelete != null)
+                    {
+                        context.busDetailsMorning.Remove(recordToDelete);
+                        context.SaveChanges();
+                    }
+                    else
+                    {
+                        Debug.WriteLine("Record Not Found");
+                    }
                 }
             }
         }
@@ -134,11 +137,11 @@ namespace BusServiceApplication.Services
         {
             using (var context = _dbContextFactory.CreateDbContext())
             {
-                var recordToDeleteChildID = context.busDetailsAfternoon.Where(x => x.ChildUserNameId == childUsername);
-                var recordToDeleteBusNumber = context.busDetailsAfternoon.Where(x => x.BusNumber == busNumber);
-                if (recordToDeleteChildID != null && recordToDeleteBusNumber != null) // if we find the record with this ID 
+                var recordToDelete = context.busDetailsAfternoon.FirstOrDefault(x => x.ChildUserNameId == childUsername && x.BusNumber == busNumber);
+
+                if (recordToDelete != null) // if we find the record with this ID 
                 {
-                    context.busDetailsAfternoon.Remove((BusDetailsAfternoon)recordToDeleteChildID);
+                    context.busDetailsAfternoon.Remove(recordToDelete);
                     context.SaveChanges();
                 }
                 else

@@ -1,52 +1,56 @@
 ﻿@using BusServiceApplication.HelperMethods;
 @using BusServiceApplication.Pages.BusRoutComponenet;
+@using BusRoutComponenet;
 @inject AdministratorServices administratorServices
 @inject StudentService studentsServices;
 @inject NavigationManager navigationManager;
 
 
 
-    <div class="container mt-5">
+    <div class="container mt-5" >
     <div class="row">
-        <div class="col-md-12 text-center">
-            <h2 class="mb-4">Summary</h2>
-            <h3>Display Waiting List</h3>
-            <p>Below are the students who are currently on the waiting list, categorized by bus number.</p>
-            <p>The blocks below give a short summary on all 3 busses divided by morning category and afternoon category </P>
-            <p>Number of students on Waiting List: @numberOfStudentsOnWaitingList</p>
+        <div class="col-md-12 text-center">         
         </div>
+
+          <div class="container mt-4" style="background-color: #A4C1EC;">
+     <h3>Display Waiting List</h3>
+            <h5>Below are the students who are currently on the waiting list, categorized by bus number.</h5>
+            <h5>The blocks below give a short summary on all 3 busses divided by morning category and afternoon category </h5>
+            <h5>Number of students on Waiting List: @numberOfStudentsOnWaitingList</h5>
     </div>
+    </div>
+    <br />
     <div class="row">
         <div class="col-md-6">
             <div class="bg-light p-4 mb-4 border border-dark">
                 <h4>Morning Buses Waiting List</h4>
-                <p>Number of students on Morning Bus One: @numberOfStudentsOnWaitingListForMorningBus1</p>
-                <p>Number of students on Morning Bus Two: @numberOfStudentsOnWaitingListForMorningBus2</p>
-                <p>Number of students on Morning Bus Three: @numberOfStudentsOnWaitingListForMorningBus3</p>
+                <p>Number of students on Morning Bus One (@BusOneMorningTripDetails.Area): @numberOfStudentsOnWaitingListForMorningBus1</p>
+                <p>Number of students on Morning Bus Two (@BusTwoMorningTripDetails.Area): @numberOfStudentsOnWaitingListForMorningBus2</p>
+                <p>Number of students on Morning Bus Three (@BusThreeMorningTripDetails.Area): @numberOfStudentsOnWaitingListForMorningBus3</p>
             </div>
         </div>
         <div class="col-md-6">
             <div class="bg-light p-4 mb-4 border border-dark">
                 <h4>Afternoon Buses Waiting List</h4>
-                <p>Number of students on Afternoon Bus One: @numberOfStudentsOnWaitingListForAfternoonBus1  </p>
-                <p>Number of students on Afternoon Bus Two: @numberOfStudentsOnWaitingListForAfternoonBus2  </p>
-                <p>Number of students on Afternoon Bus Three: @numberOfStudentsOnWaitingListForAfternoonBus3  </p>
+                <p>Number of students on Afternoon Bus One (@BusOneAfternoonTripDetails.Area): @numberOfStudentsOnWaitingListForAfternoonBus1  </p>
+                <p>Number of students on Afternoon Bus Two (@BusTwoAfternoonTripDetails.Area): @numberOfStudentsOnWaitingListForAfternoonBus2  </p>
+                <p>Number of students on Afternoon Bus Three (@BusThreeAfternoonTripDetails.Area): @numberOfStudentsOnWaitingListForAfternoonBus3  </p>
             </div>
         </div>
          <div class="col-md-6">
             <div class="bg-light p-4 mb-4 border border-dark">
                 <h4>Morning Buses Current capacity </h4>
-                <p>Number of students on Morning Bus One: @numberOfStudentsOnMorningBus1 / @BusOneMorningTripDetails.BusLimit </p>
-                <p>Number of students on Morning Bus Two: @numberOfStudentsOnMorningBus2 / @BusTwoMorningTripDetails.BusLimit</p>
-                <p>Number of students on Morning Bus Three: @numberOfStudentsOnMorningBus3/ @BusThreeMorningTripDetails.BusLimit</p>
+                <p>Number of students on Morning Bus One (@BusOneMorningTripDetails.Area): @numberOfStudentsOnMorningBus1 / @BusOneMorningTripDetails.BusLimit </p>
+                <p>Number of students on Morning Bus Two  (@BusTwoMorningTripDetails.Area): @numberOfStudentsOnMorningBus2 / @BusTwoMorningTripDetails.BusLimit</p>
+                <p>Number of students on Morning Bus Three (@BusThreeMorningTripDetails.Area): @numberOfStudentsOnMorningBus3/ @BusThreeMorningTripDetails.BusLimit</p>
             </div>
         </div>
           <div class="col-md-6">
             <div class="bg-light p-4 mb-4 border border-dark">
                 <h4>Afternoon Buses current capacity </h4>
-                <p>Number of students on Afternoon Bus One: @numberOfStudentsOnAfternoonBus1 /@BusOneAfternoonTripDetails.BusLimit</p>
-                <p>Number of students on Afternoon Bus Two: @numberOfStudentsOnAfternoonBus2 / @BusTwoAfternoonTripDetails.BusLimit</p>
-                <p>Number of students on Afternoon Bus Three: @numberOfStudentsOnAfternoonBus3 / @BusThreeAfternoonTripDetails.BusLimit</p>
+                <p>Number of students on Afternoon Bus One (@BusOneAfternoonTripDetails.Area) : @numberOfStudentsOnAfternoonBus1 /@BusOneAfternoonTripDetails.BusLimit</p>
+                <p>Number of students on Afternoon Bus Two (@BusTwoAfternoonTripDetails.Area): @numberOfStudentsOnAfternoonBus2 / @BusTwoAfternoonTripDetails.BusLimit</p>
+                <p>Number of students on Afternoon Bus Three (@BusThreeAfternoonTripDetails.Area): @numberOfStudentsOnAfternoonBus3 / @BusThreeAfternoonTripDetails.BusLimit</p>
             </div>
         </div>
     </div>

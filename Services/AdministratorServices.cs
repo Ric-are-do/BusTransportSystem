@@ -1,6 +1,7 @@
 ﻿using BusServiceApplication.Data;
 using BusServiceApplication.Data.Models;
 using BusServiceApplication.HelperMethods;
+using BusServiceApplication.Pages;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Diagnostics;
@@ -269,6 +270,33 @@ namespace BusServiceApplication.Services
         }
 
         //----------------------------------------------------
+        //list of all students 
+        public List<StudentDetails> GetListOfAllStudents()
+        {
+            List<StudentDetails> listOfStudents = new List<StudentDetails>();
+
+            using (var context = _dbContextFactory.CreateDbContext())
+            {
+                // Retrieve all students from the database
+                listOfStudents = context.studentDetails.ToList();
+            }
+
+            return listOfStudents;
+        }
+
+        // list of all parents 
+        public List<ParentDetails> GetListOfAllParents()
+        {
+            List<ParentDetails> listOfParents = new List<ParentDetails>();
+
+            using (var context = _dbContextFactory.CreateDbContext())
+            {
+                // Retrieve all students from the database
+                listOfParents = context.loginProfile.ToList();
+            }
+
+            return listOfParents;
+        }
 
     }
 

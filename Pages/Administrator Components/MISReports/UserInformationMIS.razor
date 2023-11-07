@@ -1,0 +1,261 @@
+﻿@inject AdministratorServices administratorServices
+@inject StudentService studentsServices;
+@inject BusRoutServices busRoutServices;
+@using BusServiceApplication.Pages.CalanderComponenets;
+@using System.Diagnostics;
+@using BusRoutComponenet;
+@page "/AdministarotPage/ApplicationMISReport"
+
+
+<div class="container mt-4 bg-light p-4 rounded">
+    <div class="container mt-4" style="background-color: #A4C1EC;">
+        <h2 class="text-center mb-4">Bus Service Statistics</h2>
+        <h5 class="text-center">Below is an overall summary of the different categories</h5>
+        <h5 class="text-center">--Details--</h5>
+        <h5 class="text-center">Total users of application</h5>
+        <h5 class="text-center">Ranking of different areas in terms of application usage</h5>
+        <h5 class="text-center">Ranking of different grades</h5>
+    </div>
+    <br />
+
+    <h3 class="text-center">Application Total Users</h3>
+    <table class="table table-bordered mb-4">
+        <thead class="table-primary">
+            <tr>
+                <th scope="col" class="text-center">Category</th>
+                <th scope="col" class="text-center">Count</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="text-center">Total Students using bus service</td>
+                <td class="text-center">@totalStudents</td>
+            </tr>
+            <tr>
+                <td class="text-center">Total Parents using bus service</td>
+                <td class="text-center">@totalParents</td>
+            </tr>
+        </tbody>
+    </table>
+    <br />
+
+    <h3 class="text-center">Morning Bus Route Usage (Most to Least)</h3>
+    <table class="table table-bordered">
+        <thead class="table-primary">
+            <tr>
+                <th scope="col" class="text-center">Bus Route</th>
+                <th scope="col" class="text-center">Count</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var busRoute in morningBusRoutUsage)
+            {
+                <tr>
+                    <td class="text-center">@busRoute.Key</td>
+                    <td class="text-center">@busRoute.Value</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br />
+    <h3 class="text-center">Afternoon Bus Route Usage (Most to Least)</h3>
+    <table class="table table-bordered">
+        <thead class="table-primary">
+            <tr>
+                <th scope="col" class="text-center">Bus Route</th>
+                <th scope="col" class="text-center">Count</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var busRoute in afternoonBusRoutUsage)
+            {
+                <tr>
+                    <td class="text-center">@busRoute.Key</td>
+                    <td class="text-center">@busRoute.Value</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br />
+
+    <h3 class="text-center">Grade Distribution</h3>
+    <table class="table table-bordered">
+        <thead class="table-primary">
+            <tr>
+                <th scope="col" class="text-center">Grade</th>
+                <th scope="col" class="text-center">Count</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in grades)
+            {
+                <tr>
+                    <td class="text-center">Grade @item.Key</td>
+                    <td class="text-center">@item.Value</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+
+@code {
+    private int totalStudents;
+    private int totalParents;
+    private List<KeyValuePair<string, int>> morningBusRoutUsage;
+    private List<KeyValuePair<string, int>> afternoonBusRoutUsage;
+    private List<KeyValuePair<string, int>> grades;
+
+
+    protected override void OnInitialized()
+    {
+        var studentList = GetListStudents();
+        var parentList = GetListParents();
+
+        totalStudents = CountAllStudentsonDatabase(studentList);
+        totalParents = CountAllParentsOnDatabase(parentList);
+
+        var morningBusDetails = busRoutServices.GetListOfStudentsOnMorningBus(); // lists used to get manipulate.
+        var afternoonBusDetails = busRoutServices.GetListOfStudentsOnAfternoonBus();
+        morningBusRoutUsage = MorningBusRoutUsage(morningBusDetails);
+        afternoonBusRoutUsage = AfternoonBusRoutUsage(afternoonBusDetails);
+        grades = GreadesCount(studentList);
+
+    }
+
+    //get list of students
+    public List<StudentDetails> GetListStudents()
+    {
+        List<StudentDetails> listOfStudentDetails = administratorServices.GetListOfAllStudents();
+        return listOfStudentDetails;
+    }
+
+    //get list of parents 
+    public List<ParentDetails> GetListParents()
+    {
+        List<ParentDetails> listOfParentDetails = administratorServices.GetListOfAllParents();
+        return listOfParentDetails;
+    }
+
+
+    //count total studetnts loaded on system 
+    public int CountAllStudentsonDatabase(List<StudentDetails> studentList)
+    {
+        return studentList.Count();
+    }
+
+
+    //count total parents using service
+    public int CountAllParentsOnDatabase(List<ParentDetails> parentList)
+    {
+        return parentList.Count();
+    }
+
+
+    // get order of buses in most used to least used order
+    public List<KeyValuePair<string, int>> MorningBusRoutUsage(List<BusDetailsMorning> morningBusDetails)
+    {
+        var bususageMorning = busRoutServices.GetListOfStudentsOnMorningBus();
+
+        Dictionary<string, int> areaCounts = new Dictionary<string, int>
+        {
+            { BusOneMorningTripDetails.Area , 0},
+            { BusTwoMorningTripDetails.Area , 0},
+            { BusThreeMorningTripDetails.Area , 0}
+        };
+
+        foreach (var item in morningBusDetails)
+        {
+            if (item.BusNumber == 1)
+            {
+                areaCounts[BusOneMorningTripDetails.Area]++;
+            }
+            else if (item.BusNumber == 2)
+            {
+                areaCounts[BusTwoMorningTripDetails.Area]++;
+            }
+            else if(item.BusNumber == 3)
+            {
+                areaCounts[BusThreeMorningTripDetails.Area]++;
+            }
+        }
+
+        List<KeyValuePair<string, int>> sortedAreaCounts = areaCounts.OrderByDescending(pair => pair.Value).ToList();
+        return sortedAreaCounts;
+    }
+
+    // get order of buses in most used to least used order
+    public List<KeyValuePair<string, int>> AfternoonBusRoutUsage(List<BusDetailsAfternoon> busDetailsAfternoons)
+    {
+        var bususageMorning = busRoutServices.GetListOfStudentsOnMorningBus();
+
+        Dictionary<string, int> areaCounts = new Dictionary<string, int>
+        {
+            { BusOneAfternoonTripDetails.Area , 0},
+            { BusTwoAfternoonTripDetails.Area , 0},
+            { BusThreeAfternoonTripDetails.Area , 0}
+        };
+
+        foreach (var item in busDetailsAfternoons)
+        {
+            if (item.BusNumber == 1)
+            {
+                areaCounts[BusOneMorningTripDetails.Area]++;
+            }
+            else if (item.BusNumber == 2)
+            {
+                areaCounts[BusTwoMorningTripDetails.Area]++;
+            }
+            else if (item.BusNumber == 3)
+            {
+                areaCounts[BusThreeMorningTripDetails.Area]++;
+            }
+        }
+
+        List<KeyValuePair<string, int>> sortedAreaCounts = areaCounts.OrderByDescending(pair => pair.Value).ToList();
+        return sortedAreaCounts;
+    }
+
+    public List<KeyValuePair<string, int>> GreadesCount(List<StudentDetails> studentDetails)
+    {
+        var bususageMorning = busRoutServices.GetListOfStudentsOnMorningBus();
+
+        Dictionary<string, int> grades = new Dictionary<string, int>
+        {
+            { "8", 0 },
+            { "9", 0 },
+            { "10", 0 },
+            { "11", 0 },
+            { "12", 0 }
+        };
+
+        foreach (var item in studentDetails)
+        {
+            if (item.Grade == "8")
+            {
+                grades["8"]++;
+            }
+            else if (item.Grade == "9")
+            {
+                grades["9"]++;
+            }
+            else if (item.Grade == "10")
+            {
+                grades["10"]++;
+            }
+            else if (item.Grade == "11")
+            {
+                grades["11"]++;
+            }
+            else if (item.Grade == "12")
+            {
+                grades["12"]++;
+            }
+        }
+
+        List<KeyValuePair<string, int>> storedGradesCount = grades.OrderByDescending(pair => pair.Value).ToList();
+        return storedGradesCount;
+    }
+
+}

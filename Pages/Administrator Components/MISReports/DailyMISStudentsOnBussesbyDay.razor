@@ -1,13 +1,21 @@
 ﻿@inject AdministratorServices administratorServices
 @inject StudentService studentsServices;
 @inject BusRoutServices busRoutServices;
+@inject NavigationManager navigationManager;
+@using BusServiceApplication.HelperMethods;
 @using BusServiceApplication.Pages.CalanderComponenets;
+@using BusRoutComponenet;
 @using System.Diagnostics;
 @page "/AdministarotPage/DailyMISReport"
 
-<div class="container mt-5">
-    <h1 class="mb-4 text-center">Daily MIS Report</h1>
-    <p class="mb-4 text-center">Select a date on the calendar below and click the search button to view the student details for the selected day.</p>
+<div class="container mt-5" >
+   
+    <div class="container mt-4" style="background-color: #A4C1EC;">
+    <h1 class="mb-4 text-center" >Daily MIS Report</h1>
+    <h5 class="mb-4 text-center">Select a date on the calendar below and click the search button to view the student details for the selected day.</h5>
+     <h5 class="mb-4 text-center">Clicking the delete button will remove the particular studdent from the bus </h5>
+
+    </div>
 
     <div class="row justify-content-center mb-4">
         <div class="col-md-6">
@@ -26,23 +34,23 @@
             <div class="col-md-6">
                 <div class="bg-light p-4 mb-4 border border-dark mx-auto text-center">
                     <h4>Students using morning buses</h4>
-                    <p>Number of students on Morning Bus One: @countOfStudentsOnMorningBusOne</p>
-                    <p>Number of students on Morning Bus Two: @countOfStudentsOnMorningBusTwo</p>
-                    <p>Number of students on Morning Bus Three: @countOfStudentsOnMorningBusThree</p>
+                    <p>Number of students on Morning Bus One (@BusOneMorningTripDetails.Area): @countOfStudentsOnMorningBusOne</p>
+                    <p>Number of students on Morning Bus Two (@BusTwoMorningTripDetails.Area): @countOfStudentsOnMorningBusTwo</p>
+                    <p>Number of students on Morning Bus Three (@BusThreeMorningTripDetails.Area): @countOfStudentsOnMorningBusThree</p>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="bg-light p-4 mb-4 border border-dark mx-auto text-center">
                     <h4>Student using afternoon buses</h4>
-                    <p>Number of students on Afternoon Bus One: @countOfStudentsOnAfternoonBusOne</p>
-                    <p>Number of students on Afternoon Bus Two: @countOfStudentsOnAfternoonBusTwo</p>
-                    <p>Number of students on Afternoon Bus Three: @countOfStudentsOnAfternoonBusThree</p>
+                    <p>Number of students on Afternoon Bus One (@BusOneAfternoonTripDetails.Area): @countOfStudentsOnAfternoonBusOne</p>
+                    <p>Number of students on Afternoon Bus Two (@BusTwoAfternoonTripDetails.Area): @countOfStudentsOnAfternoonBusTwo</p>
+                    <p>Number of students on Afternoon Bus Three (@BusThreeAfternoonTripDetails.Area): @countOfStudentsOnAfternoonBusThree</p>
                 </div>
             </div>
             <div class="col-md-12">
                 <div class="bg-light p-4 mb-4 border border-dark mx-auto text-center">
                     <h4>Bus Totals for the day</h4>
-                    <p>Total number of students on morning bus: @countOfAllStuddentsOnAGivenDayUsingMonringBusses</p>
+                    <p>Total number of students on morning bus : @countOfAllStuddentsOnAGivenDayUsingMonringBusses</p>
                     <p>Total number of students on afternoon bus: @countOfAllStuddentsOnAGivenDayUsingAfternoonBusses</p>
                     <p>Total number of students using bus service on given day: @total</p>
                 </div>
@@ -65,7 +73,9 @@
                         <th class="text-center">Grade</th>
                         <th class="text-center">Area</th>
                         <th class="text-center">Start Date</th>
-                        <th class="text-center">End Date</th
+                        <th class="text-center">End Date</th>
+                        <th class="text-center">Delete</th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -79,6 +89,9 @@
                             <td>@item.Area</td>
                             <td>@item.TakingBusStartDate</td>
                             <td>@item.TakingBusEndDate</td>
+                            <td>
+                                <button class="btn btn-danger btn-sm" @onclick="() => DeleteRecordFromMorningBus(item.ChildUserNameId,item.BusNumber)">Delete</button>
+                            </td>
                         </tr>
                     }
                 </tbody>
@@ -98,6 +111,7 @@
                         <th class="text-center">Area</th>
                         <th class="text-center">Start Date</th>
                         <th class="text-center">End Date</th>
+                        <th class="text-center">Delete</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -111,6 +125,9 @@
                             <td>@item.Area</td>
                             <td>@item.TakingBusStartDate</td>
                             <td>@item.TakingBusEndDate</td>
+                            <td>
+                                <button class="btn btn-danger btn-sm" @onclick="() => DeleteRecordFromMorningBus(item.ChildUserNameId,item.BusNumber)">Delete</button>
+                            </td>
                         </tr>
                     }
                 </tbody>
@@ -130,6 +147,7 @@
                         <th class="text-center">Area</th>
                         <th class="text-center">Start Date</th>
                         <th class="text-center">End Date</th>
+                        <th class="text-center">Delete</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -143,6 +161,9 @@
                             <td>@item.Area</td>
                             <td>@item.TakingBusStartDate</td>
                             <td>@item.TakingBusEndDate</td>
+                            <td>
+                                <button class="btn btn-danger btn-sm" @onclick="() => DeleteRecordFromMorningBus(item.ChildUserNameId,item.BusNumber)">Delete</button>
+                            </td>
                         </tr>
                     }
                 </tbody>
@@ -166,6 +187,7 @@
                             <th class="text-center">Area</th>
                             <th class="text-center">Start Date</th>
                             <th class="text-center">End Date</th>
+                        <th class="text-center">Delete</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -179,6 +201,9 @@
                                 <td>@item.Area</td>
                                 <td>@item.TakingBusStartDate</td>
                                 <td>@item.TakingBusEndDate</td>
+                            <td>
+                                <button class="btn btn-danger btn-sm" @onclick="() => DeleteRecordFromAfternoonBus(item.ChildUserNameId,item.BusNumber)">Delete</button>
+                            </td>
                             </tr>
                         }
                     </tbody>
@@ -198,6 +223,7 @@
                             <th class="text-center">Area</th>
                             <th class="text-center">Start Date</th>
                             <th class="text-center">End Date</th>
+                        <th class="text-center">Delete</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -211,6 +237,9 @@
                                 <td>@item.Area</td>
                                 <td>@item.TakingBusStartDate</td>
                                 <td>@item.TakingBusEndDate</td>
+                            <td>
+                                <button class="btn btn-danger btn-sm" @onclick="() => DeleteRecordFromAfternoonBus(item.ChildUserNameId,item.BusNumber)">Delete</button>
+                            </td>
                             </tr>
                         }
                     </tbody>
@@ -230,6 +259,7 @@
                             <th class="text-center">Area</th>
                             <th class="text-center">Start Date</th>
                             <th class="text-center">End Date</th>
+                        <th class="text-center">Delete</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -243,6 +273,9 @@
                                 <td>@item.Area</td>
                                 <td>@item.TakingBusStartDate</td>
                                 <td>@item.TakingBusEndDate</td>
+                            <td>
+                                <button class="btn btn-danger btn-sm" @onclick="() => DeleteRecordFromAfternoonBus(item.ChildUserNameId,item.BusNumber)">Delete</button>
+                            </td>
                             </tr>
                         }
                     </tbody>
@@ -371,5 +404,24 @@
         return thisStudentsDetails;
     }
 
+        public void DeleteRecordFromMorningBus(string childUserId, int busNumber)
+    {
+        busRoutServices.DeleteStudentFromBusRoutMorning(childUserId, busNumber);
+        // Refresh the data after deletion
+        Refresh();
+    }
+
+    public void DeleteRecordFromAfternoonBus(string childUserId, int busNumber)
+    {
+        busRoutServices.DeleteStudentFromBusRoutAfternoon(childUserId, busNumber);
+        // Refresh the data after deletion
+        Refresh();
+    }
+
+    public void Refresh()
+    {
+        var refreshPage = new RefreshPage(navigationManager);
+        refreshPage.refreshApplication();
+    }
 }
 }

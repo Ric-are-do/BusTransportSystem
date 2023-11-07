@@ -57,6 +57,7 @@
             busDetailsAfternoon.BusRouteBPickupTime = busOneTripDetails.BusRouteBPickupTime;
             busDetailsAfternoon.MorningTrip = busOneTripDetails.MorningTrip;
             busDetailsAfternoon.Area = busOneTripDetails.Area;
+            showMessage = true;
         }
         else if (selectedBusOption == 2)
         {
@@ -68,6 +69,7 @@
             busDetailsAfternoon.BusRouteBPickupTime = busTwoTripDetails.BusRouteBPickupTime;
             busDetailsAfternoon.MorningTrip = busTwoTripDetails.MorningTrip;
             busDetailsAfternoon.Area = busTwoTripDetails.Area;
+            showMessage = true;
         }
         else if (selectedBusOption == 3)
         {
@@ -79,6 +81,7 @@
             busDetailsAfternoon.BusRouteBPickupTime = busThreeTripDetails.BusRouteBPickupTime;
             busDetailsAfternoon.MorningTrip = busThreeTripDetails.MorningTrip;
             busDetailsAfternoon.Area = busThreeTripDetails.Area;
+            showMessage = true;
         }
 
        
@@ -87,6 +90,11 @@
         </div>
 
             <div class="mt-3">
+            @if (showMessage == true)
+            {
+                var capacityMessage = DisplayCapacityMessageForParent(busDetailsAfternoon.BusNumber);
+                <h3 style="color: @capacityMessage.Color;">@capacityMessage.Message</h3>
+            }
             <p><strong>Bus Limit:</strong> @busDetailsAfternoon.BusLimit</p>
             <p><strong>First Stop:</strong> @busDetailsAfternoon.BusRouteAAddress</p>
             <p><strong>Arrival Time:</strong> @busDetailsAfternoon.BusRouteAPickupTime</p>
@@ -251,6 +259,97 @@
             MorningTrip = BusThreeAfternoonTripDetails.MorningTrip,
             Area = BusThreeAfternoonTripDetails.Area,
         };
+
+    //create logic that shows if the current buss is full and if child will be added to waiting List
+    // step 1 get a list of students on the current bus selected
+    // step 2 complete a count on those students
+
+    public int countStudnetOnBus(int busNumber)
+    {
+        int studentsOnBus1 = 0;
+        int studentsOnBus2 = 0;
+        int studentsOnBus3 = 0;
+        var StudentOnMorningBus = busRoutServices.GetListOfStudentsOnAfternoonBus();
+
+        foreach (var item in StudentOnMorningBus)
+        {
+            if (item.BusNumber == 1)
+            {
+                studentsOnBus1++;
+            }
+            else if (item.BusNumber == 2)
+            {
+                studentsOnBus2++;
+            }
+            else
+            {
+                studentsOnBus3++;
+            }
+
+        }
+
+        if (busNumber == 1)
+        {
+            return studentsOnBus1;
+        }
+        else if (busNumber == 2)
+        {
+            return studentsOnBus2;
+        }
+        else if (busNumber == 3)
+        {
+            return studentsOnBus3;
+        }
+        else
+        {
+            return -1; //incare of errors
+        }
+
+    }
+    public class CapacityMessage
+    {
+        public string Message { get; set; }
+        public string Color { get; set; }
+    }
+
+    // step 3 compare that count to the max capacity of the bus
+    public CapacityMessage DisplayCapacityMessageForParent(int busNumber)
+    {
+        int studentsOnSelectedBus = countStudnetOnBus(busNumber);
+        int busCapacity = 0;
+
+        // Get the values
+        if (busNumber == 1)
+        {
+            busCapacity = BusOneMorningTripDetails.BusLimit;
+        }
+        else if (busNumber == 2)
+        {
+            busCapacity = BusTwoMorningTripDetails.BusLimit;
+        }
+        else if (busNumber == 3)
+        {
+            busCapacity = BusThreeMorningTripDetails.BusLimit;
+        }
+
+        // Determine the color based on bus capacity
+        string color = studentsOnSelectedBus < busCapacity ? "green" : "red";
+
+        // Create the capacity message object
+        CapacityMessage message = new CapacityMessage
+            {
+                Message = studentsOnSelectedBus < busCapacity
+                            ? $"There bus currently has {busCapacity - studentsOnSelectedBus} seats available. Your child will be automatically added to the roster"
+                            : $"The Bus is currently at capacity. The student will be placed on a waiting list.",
+                Color = color
+            };
+
+        return message;
+    }
+
+
+    //handle the show message function in the select list
+    public bool showMessage = false;// message for capacity
 
 
 
